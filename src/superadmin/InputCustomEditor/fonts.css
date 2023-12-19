@@ -1,0 +1,44 @@
+.ql-font span[data-value="georgia"]::before,
+.ql-font span[data-label="Georgia"]::before {
+  font-family: "Georgia";
+}
+
+.ql-font span[data-value="courier-new"]::before,
+.ql-font span[data-label="Courier"]::before {
+  font-family: "Courier";
+}
+
+.ql-font span[data-value="comic-sans"]::before,
+.ql-font span[data-label="Comic Sans MS"]::before {
+  font-family: "Comic Sans MS";
+}
+
+.ql-font span[data-value="helvetica"]::before,
+.ql-font span[data-label="Helvetica"]::before {
+  font-family: "Helvetica";
+}
+
+.ql-font span[data-value="lucida"]::before,
+.ql-font span[data-label="Lucida"]::before {
+  font-family: "Lucida";
+}
+
+.ql-font-georgia {
+  font-family: 'Georgia';
+}
+
+.ql-font-courier-new {
+  font-family: 'Courier';
+}
+
+.ql-font-comic-sans {
+  font-family: 'Comic Sans MS';
+}
+
+.ql-font-Helvetica {
+  font-family: 'Helvetica';
+}
+
+.ql-font-lucida {
+  font-family: 'Lucida';
+}

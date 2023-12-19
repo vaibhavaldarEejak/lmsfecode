@@ -1,0 +1,186 @@
+.login__body {
+  background-image: url("/public/media/background-images/14.png");
+  background-size: contain;
+  background-position-y: bottom;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+.form__group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.login__button[type="submit"] {
+  border: none;
+  background-color: #007aff;
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 9px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+  max-width: 200px; /* adjust the value as per your requirements */
+}
+.i-btn i svg{
+  display: flex;
+}
+/* @media (max-width: 768px) {
+  .login__button[type="submit"] {
+    max-width: 50%;
+  }
+} */
+
+.login__button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.forgot-password {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: #8c8c8c;
+}
+
+.forgot-password a {
+  color: #007aff;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.card-logo{
+margin-top: 2.25rem !important;
+}
+
+.login__container {
+ 
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1);  /* background-color: rgba(255, 255, 255, 0.9); */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  /* width: 100%; */
+  border-radius: 7px;
+  /* backdrop-filter: blur(1px); */
+  /* background-color: rgba(255, 255, 255, 0.5); */
+  opacity: 0.9;
+}
+
+.logo__container {
+  margin-bottom: 1rem;
+  text-align: center;
+  width: 35%;
+  /* height: 10vh */
+  margin-top: 4rem;
+}
+
+.logo-container img {
+  max-width: 40%;
+  max-height: 70%;
+}
+
+@media (max-width: 768px) {
+  .logo__container {
+    width: 30%;
+  }
+  .logo-container img {
+    max-width: 30%;
+    max-height: 80%;
+  }
+}
+
+/* @media (max-width: 1440px) {
+  .logo__container {
+    width: 17%;
+  }
+} */
+
+/* @media (max-width: 1024px) {
+  .logo__container {
+    width: 25%;
+  }
+} */
+
+@media (max-width: 768px) {
+  .form__container {
+    width: 40%;
+    padding: 1.5rem;
+    backdrop-filter: blur(4px);
+    background-color: #FFFF;
+    /* text-align: center; */ 
+    border-radius: 25px;
+    margin-bottom: 15px;
+  }
+}
+
+.form__container {
+  width: 60%;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+  background-color: #FFFF;
+  /* text-align: center; */ 
+  border-radius: 25px;
+  margin-bottom: 20px;
+}
+.card__shadow {
+  -webkit-box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.75);
+  box-shadow: 0 24px 24px -24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.1);
+
+}
+.login__title {
+  text-align: center;
+  color: 181c32;
+}
+.p-error {
+  color: red;
+}
+.p-field {
+  margin-bottom: 1.5rem;
+  padding: 0 3rem; 
+}
+.p-field .p-float-label {
+  width: 100%;
+}
+
+.p-field .p-inputtext,
+.p-field .p-password {
+  width: 100%;
+  border-radius: 7px;
+  background-color: #f0f0f0;
+}
+
+.p-field .p-inputtext:not(:last-child),
+.p-field .p-password:not(:last-child) {
+  margin-right: .1rem;
+  /* border-radius: 7px; */
+}
+.custom-input {
+  height: 46px;
+  font-size: 16px;
+}
+.error__message{
+  font-size: 16px;
+  font-weight: normal;
+  color: red;
+  text-align: center;
+}
+.mainContainer .p-inputtext{
+  
+
+}

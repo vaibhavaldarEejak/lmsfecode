@@ -1,0 +1,10 @@
+.sidebar {
+    overflow-x: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .sidebar ::-webkit-scrollbar {
+    display: none;
+  }

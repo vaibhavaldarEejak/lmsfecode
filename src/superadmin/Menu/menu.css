@@ -1,0 +1,6 @@
+.removeCancelButton svg.p-icon.p-dropdown-clear-icon.p-clickable {
+  display: none;
+}
+.p-column-filter-clear-button p-link {
+  display: none;
+}

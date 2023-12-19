@@ -1,0 +1,152 @@
+.cs-editor-wrapper rich{
+  margin-bottom: 20px;
+  height: 308px;
+  overflow: "overflow-y";
+  border: 1px solid rgb(141, 144, 147) !important;
+  border-radius: 5px;
+}
+
+.ce-wrapper {
+  
+  overflow: "overflow-y";
+}
+
+.ce-editor {
+  height: 10rem;
+  overflow: auto;
+  padding: 0 20px;
+  
+  /* border: 1px solid rgb(57, 54, 54) !important; */
+  /* border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px; */
+}
+@media only screen and (max-width: 1200px){
+  .ce-editor.rdw-editor-main{
+    height: 10rem;
+  }
+}
+
+
+.notranslate.public-DraftEditor-content:first-child{
+  height: 12rem;
+}
+
+.hide {
+  display: none;
+}
+
+.cw-source {
+  border: 1px solid #dae5f3;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  height: 213px;
+  overflow: auto;
+  padding: 0px 0px 0px 20px;
+  margin-top: 1px;
+}
+
+.cw-source--textarea {
+  background-color: transparent;
+  border: 0;
+  color: #333;
+  display: block;
+  height: 206px;
+  line-height: 22px;
+  overflow: auto;
+  padding: 0;
+  resize: none;
+  transition: 100ms ease-out;
+  width: 100%;
+  margin-top: 1px;
+}
+
+.cw-source--textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* toolbar style */
+.ce-toolbar--dynamic-field {
+  width: 200px;
+  
+  
+}
+
+.ce-toolbar--html-source {
+  padding: 0 10px;
+}
+
+.ce-toolbar--html-source-btn {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  height: 38px;
+  width: 38px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ce-toolbar--document-download-btn {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  height: 38px;
+  width: 38px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ce-toolbar--html-source-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.ce-toolbar--html-source-btn:hover {
+  opacity: 0.3;
+}
+
+.rdw-editor-toolbar {
+  padding: 20px;
+  background: #fdfdfd;
+  margin-bottom: 0;
+  border-top-left-radius: 8px !important ;
+  border-top-right-radius: 8px !important;
+  border-bottom: 0;
+}
+
+.rdw-option-wrapper {
+  background-color: transparent;
+}
+
+.rdw-option-wrapper:hover {
+  box-shadow: none;
+  opacity: 0.3;
+}
+
+.rdw-dropdown-wrapper {
+  background: white;
+  height: 38px;
+  border-radius: 2px;
+  border-color: #ccc;
+  border-radius: 4px;
+}
+
+.rdw-dropdown-wrapper:hover {
+  box-shadow: none;
+  border-color: #b2b2b2;
+}
+
+
+.cs-toolbar.disabled .ce-toolbar,
+.cs-toolbar.disabled .ce-toolbar--dynamic-field {
+  opacity: 0.4;
+  pointer-events: none;
+  -ms-touch-action: none;
+  touch-action: none;
+}

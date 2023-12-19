@@ -1,0 +1,10 @@
+.required {
+  &:after {
+    content: '*';
+    position: relative;
+    font-size: inherit;
+    color: red;
+    padding-left: 0.25rem;
+    font-weight: bold;
+  }
+}

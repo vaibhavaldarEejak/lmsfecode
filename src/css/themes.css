@@ -1,0 +1,985 @@
+.cs-editor-wrapper.rdw-editor-main {
+  height: 11rem !important
+}
+
+
+.themeColorDark {
+  background-color: #212529 !important;
+  color: #fff !important;
+  border: #212529;
+}
+.themeColorDark:hover {
+  background-color: #212529 !important;
+  color: #fff !important;
+  opacity: 0.9;
+}
+.themeSideBarColorDark .sidebar.sidebar-fixed {
+  background-color: #212529 !important;
+}
+.sidebar.sidebar-fixed.show.themeSideBarColorDark ul.sidebar-nav {
+  background-color: #212529 !important;
+}
+.badgeColorDark {
+  color: #212529 !important;
+}
+
+.dropdown-item-with-border {
+  border: 0.5px solid rgb(184, 181, 181);
+}
+.AddButtonDark {
+  border: #212529;
+  background-color: #212529 !important;
+  color: #fff;
+}
+.AddButtonDark:hover {
+  border: #212529;
+  background-color: #212529 !important;
+  color: #fff;
+  opacity: 0.9;
+}
+.tableThemeDark
+  button.p-paginator-page.p-paginator-element.p-link.p-paginator-page-start.p-highlight {
+  color: #212529 !important;
+}
+.themeSideBarColorDark .sidebar.sidebar-fixed.show {
+  background-color: #212529 !important;
+}
+/* .themeColorDark a :hover {
+  background-color: #212529 !important;
+  color: #fff !important;
+  opacity: 0.9; 
+}*/
+.themeColorsDark .form-check-input:checked {
+  background-color: #212529 !important;
+  border-color: #212529 !important;
+}
+
+.menuTextColorDark a.nav-link.nav-group-toggle {
+  color: #fff !important;
+}
+.menuTextColorDark a.nav-link {
+  color: #fff !important;
+}
+.menuTextColorDark .sidebar-nav .nav-group-toggle:hover {
+  color: #fff !important;
+}
+.menuTextColorDark .nav-icon {
+  color: #fff !important;
+}
+.menuTextColorDark .nav-title {
+  color: #fff !important;
+}
+.menuTextColorDark li a.nav-link {
+  color: #fff !important;
+}
+.HeaderThemeDark {
+  background-color: #212529 !important;
+  border: #212529 !important;
+  color: #fff !important;
+}
+
+.InputThemeColorDark .form-control:focus {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #212529 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #212529 !important;
+}
+.InputThemeColorDark .form-select:focus {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #212529 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #212529 !important;
+}
+.InputThemeColorDark .css-t3ipsp-control:hover {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #212529 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #212529 !important;
+}
+.searchBarBoxDark input.p-inputtext.p-component.p-input-sm:hover {
+  border-color: #212529 !important;
+}
+.searchBarBoxDark input.p-inputtext.p-component.p-input-sm:focus {
+  box-shadow: 0 0 0 0.2rem #2125298c !important;
+  border-color: #212529 !important;
+}
+.selectThemeClassDark .form-select.me-md-2:focus {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #212529 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #212529 !important;
+}
+.saveButtonThemeDark {
+  background-color: #212529 !important;
+  color: #fff !important;
+  border: #212529;
+}
+.formHeaderDark{
+  background-color: #212529 !important;
+    color: #fff !important;
+    border: #212529;
+}
+.parentClassDark .form-check-input:checked {
+  background-color: #212529 !important;
+  border-color: #212529 !important;
+}
+.parentClassDark .form-check-input:focus {
+  border-color: #212529 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.25rem #212529 !important;
+}
+.parentClassDark .p-datatable .p-sortable-column:focus {
+  box-shadow: inset 0 0 0 0.15rem #212529;
+  outline: 0 none;
+}
+.parentClassDark .form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #6c757d !important;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem #6c757d4f !important;
+}
+.InputThemeColorDark .form-check-input:focus {
+  border-color: #212529;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem #212529 !important;
+}
+.InputThemeColorDark .form-check-input:checked {
+  background-color: #212529;
+  border-color: #212529;
+}
+.saveButtonTheme1Dark span.p-button.p-fileupload-choose.p-component {
+  background-color: #212529;
+  border-color: #212529;
+}
+.tableThemeColorDark .p-checkbox-box.p-highlight {
+  background-color: #212529 !important;
+  border-color: #212529 !important;
+}
+.tableThemeColorDark
+  .p-checkbox:not(.p-checkbox-disabled)
+  .p-checkbox-box:hover:hover {
+  border-color: #212529 !important;
+}
+.InputThemeColorDark .span.badge.bg-primary.badge.badge-light-info {
+  background-color: #212529 !important;
+  border-color: #212529;
+}
+.bg-primary .InputThemeColorDark .bg-primary {
+  background-color: #212529 !important;
+  border-color: #212529;
+}
+.InputThemeColorDark
+  .p-inputswitch.p-inputswitch-checked
+  .p-inputswitch-slider {
+  box-shadow: 0 0 0 0.25rem #212529 !important;
+  background-color: #212529 !important;
+}
+.InputThemeColorDark tr:first-child th {
+  background-color: #212529 !important;
+  color: #fff !important;
+}
+.InputThemeColorDark tr:first-child th svg {
+  color: #fff !important;
+}
+.iconThemeDark {
+  color: #000 !important;
+}
+.ButtonColorGrey {
+  background-color: #00001533 !important;
+  border: #00001533 !important;
+  color: #fff !important;
+}
+.themeColorGrey {
+  background-color: #6c757d !important;
+  border: #6c757d !important;
+  color: #000 !important;
+}
+
+.themeColorGrey:hover {
+  background-color: #6c757d !important;
+  color: #000 !important;
+  opacity: 0.9;
+}
+.themeSideBarColorGrey .sidebar.sidebar-fixed {
+  background-color: #6c757d !important;
+}
+.sidebar.sidebar-fixed.show.themeSideBarColorGrey ul.sidebar-nav {
+  background-color: #6c757d !important;
+}
+.badgeColorGrey {
+  color: #6c757d !important;
+}
+.AddButtonGrey {
+  border: #6c757d;
+  background-color: #6c757d !important;
+  color: #000;
+}
+.AddButtonGrey:hover {
+  border: #6c757d;
+  background-color: #6c757d !important;
+  color: #000;
+  opacity: 0.9;
+}
+.tableThemeGrey
+  button.p-paginator-page.p-paginator-element.p-link.p-paginator-page-start.p-highlight {
+  color: #6c757d !important;
+}
+.themeSideBarColorGrey .sidebar.sidebar-fixed.show {
+  background-color: #6c757d !important;
+}
+/* .themeColorGrey a :hover {
+  background-color: #212529 !important;
+  color: #fff !important;
+  opacity: 0.9; 
+}*/
+.themeColorsGrey .form-check-input:checked {
+  background-color: #6c757d !important;
+  border-color: #6c757d !important;
+}
+.menuTextColorGrey a.nav-link.nav-group-toggle {
+  color: #fff !important;
+}
+.menuTextColorGrey a.nav-link {
+  color: #fff !important;
+}
+.menuTextColorGrey .sidebar-nav .nav-group-toggle:hover {
+  color: #fff !important;
+}
+.menuTextColorGrey .nav-icon {
+  color: #fff !important;
+}
+.menuTextColorGrey .nav-title {
+  color: #fff !important;
+}
+.menuTextColorGrey li a.nav-link {
+  color: #fff !important;
+}
+.HeaderThemeGrey {
+  background-color: #6c757d !important;
+  border: #6c757d !important;
+  color: #000 !important;
+}
+.InputThemeColorGrey .form-control:focus {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #212529 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #212529 !important;
+}
+.InputThemeColorGrey .form-select:focus {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #6c757d !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #6c757d !important;
+}
+.InputThemeColorGrey .css-t3ipsp-control:hover {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #6c757d !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #6c757d !important;
+}
+.themeSAButtonColorGrey {
+  color: #ffffff;
+  background: #484848 !important;
+  border: 1px solid #484848 !important;
+}
+.searchBarBoxGrey input.p-inputtext.p-component.p-input-sm:hover {
+  border-color: #6c757d !important;
+}
+.searchBarBoxGrey input.p-inputtext.p-component.p-input-sm:focus {
+  box-shadow: 0 0 0 0.2rem #2125298c !important;
+  border-color: #6c757d !important;
+}
+.selectThemeClassGrey .form-select.me-md-2:focus {
+  color: #6c757d !important;
+  background-color: #fff !important;
+  border-color: #6c757d !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #6c757d !important;
+}
+.saveButtonThemeGrey {
+  background-color: #6c757d !important;
+  color: #fff !important;
+  border: #6c757d !important;
+}
+.formHeaderGrey {
+  background-color: #6c757d !important;
+  color: #fff !important;
+  border: #6c757d !important;
+}
+.parentClassGrey .form-check-input:checked {
+  background-color: #484848 !important;
+  border-color: #6c757d !important;
+}
+.parentClassGrey .form-check-input:focus {
+  border-color: #6c757d !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.25rem #6c757d !important;
+}
+.parentClassGrey .p-datatable .p-sortable-column:focus {
+  box-shadow: inset 0 0 0 0.15rem #6c757d;
+  outline: 0 none;
+}
+.parentClassGrey .form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #6c757d !important;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem #6c757d4f !important;
+}
+.InputThemeColorGrey .form-check-input:focus {
+  border-color: #6c757d;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem #6c757d4f !important;
+}
+.InputThemeColorGrey .form-check-input:checked {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+.saveButtonTheme1Grey span.p-button.p-fileupload-choose.p-component {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+.tableThemeColorGrey .p-checkbox-box.p-highlight {
+  background-color: #6c757d !important;
+  border-color: #6c757d !important;
+}
+.tableThemeColorGrey
+  .p-checkbox:not(.p-checkbox-disabled)
+  .p-checkbox-box:hover:hover {
+  border-color: #6c757d !important;
+}
+.InputThemeColorGrey .span.badge.bg-primary.badge.badge-light-info {
+  background-color: #6c757d !important;
+  border-color: #6c757d;
+}
+.InputThemeColorGrey
+  .p-inputswitch.p-inputswitch-checked
+  .p-inputswitch-slider {
+  box-shadow: 0 0 0 0.25rem #6c757d4f !important;
+  background-color: #6c757d !important;
+}
+.InputThemeColorGrey tr:first-child th {
+  background-color: #6c757d !important;
+  color: #fff !important;
+}
+.InputThemeColorGrey tr:first-child th svg {
+  color: #fff !important;
+}
+.iconThemeGrey {
+  color: #6c757d !important;
+}
+.themeColorLightBlue {
+  background-color: #0dcaf0 !important;
+  border: #0dcaf0;
+}
+
+.themeColorLightBlue:hover {
+  background-color: #0dcaf0 !important;
+  opacity: 0.9;
+}
+.themeSideBarColorLightBlue .sidebar.sidebar-fixed {
+  background-color: #0dcaf0 !important;
+}
+.sidebar.sidebar-fixed.show.themeSideBarColorLightBlue ul.sidebar-nav {
+  background-color: #0dcaf0 !important;
+}
+.badgeColorLightBlue {
+  color: #0dcaf0 !important;
+}
+.AddButtonLightBlue {
+  border: #0dcaf0;
+  background-color: #0dcaf0 !important;
+  color: #000;
+}
+.AddButtonLightBlue:hover {
+  border: #0dcaf0;
+  background-color: #0dcaf0 !important;
+  color: #000;
+  opacity: 0.9;
+}
+.tableThemeLightBlue
+  button.p-paginator-page.p-paginator-element.p-link.p-paginator-page-start.p-highlight {
+  color: #0dcaf0 !important;
+}
+.themeSideBarColorLightBlue .sidebar.sidebar-fixed.show {
+  background-color: #0dcaf0 !important;
+  color: #000 !important;
+}
+/* .themeColorLightBlue a :hover {
+  background-color: #212529 !important;
+  color: #fff !important;
+  opacity: 0.9; 
+}*/
+.themeColorsLightBlue .form-check-input:checked {
+  background-color: #0dcaf0 !important;
+  border-color: #0dcaf0 !important;
+}
+.sideBarIconsLightBlue {
+    filter: invert(0%) sepia(9%) saturate(0%) hue-rotate(170deg) brightness(20%) contrast(100%);
+}
+
+.ButtonColorLightBlue {
+  background-color: #00001533 !important;
+  border: #00001533 !important;
+  color: #000 !important;
+}
+.menuTextColorLightBlue a.nav-link.nav-group-toggle {
+  color: #000 !important;
+}
+.menuTextColorLightBlue a.nav-link {
+  color: #000 !important;
+}
+.menuTextColorLightBlue .sidebar-nav .nav-group-toggle:hover {
+  color: #000 !important;
+}
+.menuTextColorLightBlue .nav-icon {
+  color: #000 !important;
+}
+
+.themeSideBarColorLightBlue .nav-title {
+  color: #000 !important;
+}
+.menuTextColorLightBlue li a.nav-link {
+  color: #000 !important;
+}
+.HeaderThemeLightBlue {
+  background-color: #0dcaf0 !important;
+  border: #0dcaf0 !important;
+  color: #000 !important;
+}
+.InputThemeColorLightBlue .form-control:focus {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #0dcaf0 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #0dcaf0 !important;
+}
+.InputThemeColorLightBlue .form-select:focus {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #0dcaf0 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #0dcaf0 !important;
+}
+.InputThemeColorLightBlue .css-t3ipsp-control:hover {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #0dcaf0 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #0dcaf0 !important;
+}
+.themeSideBarColorLightBlue a.nav-link.nav-group-toggle {
+  color: #000 !important;
+}
+.themeSideBarColorLightBlue a.nav-link {
+  color: #000 !important;
+}
+.themeSideBarColorLightBlue svg.nav-icon {
+  color: #000 !important;
+}
+.themeSideBarColorLightBlue .sidebar-nav .nav-group-toggle::after {
+  filter: invert(100%) sepia(100%) saturate(5247%) hue-rotate(130deg)
+    brightness(95%) contrast(566%) !important ;
+}
+.themeSAButtonColorLightBlue {
+  color: #ffffff;
+  background: rgb(0 0 21 / 40%) !important;
+  border: 1px solid rgba(3, 3, 7, 0.4) !important;
+}
+
+.searchBarBoxLightBlue input.p-inputtext.p-component.p-input-sm:hover {
+  border-color: #0dcaf0 !important;
+}
+.searchBarBoxLightBlue input.p-inputtext.p-component.p-input-sm:focus {
+  box-shadow: 0 0 0 0.2rem #0dcaf0 !important;
+  border-color: #0dcaf0 !important;
+}
+.selectThemeClassLightBlue .form-select.me-md-2:focus {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #0dcaf0 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #0dcaf0 !important;
+}
+.saveButtonThemeLightBlue {
+  background-color: #0dcaf0 !important;
+  color: #fff !important;
+  border: #0dcaf0;
+}
+.formHeaderLightBlue {
+  background-color: #0dcaf0 !important;
+  color: #fff !important;
+  border: #0dcaf0;
+}
+.parentClassLightBlue .form-check-input:checked {
+  background-color: #0dcaf0 !important;
+  border-color: #0dcaf0 !important;
+}
+.parentClassLightBlue .form-check-input:focus {
+  border-color: #0dcaf0 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.25rem #0dcaf0 !important;
+}
+.parentClassLightBlue .p-datatable .p-sortable-column:focus {
+  box-shadow: inset 0 0 0 0.15rem #0dcaf0;
+  outline: 0 none;
+}
+/* .parentClassAliceblue .form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #6c757d !important;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem #6c757d4f !important;
+} */
+.InputThemeColorLightBlue .form-check-input:focus {
+  border-color: #0dcaf0;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem #0dcaf0 !important;
+}
+.InputThemeColorLightBlue .form-check-input:checked {
+  background-color: #0dcaf0;
+  border-color: #0dcaf0;
+}
+.saveButtonTheme1LightBlue span.p-button.p-fileupload-choose.p-component {
+  background-color: #0dcaf0;
+  border-color: #0dcaf0;
+}
+.tableThemeColorLightBlue .p-checkbox-box.p-highlight {
+  background-color: #0dcaf0 !important;
+  border-color: #0dcaf0 !important;
+}
+.tableThemeColorLightBlue
+  .p-checkbox:not(.p-checkbox-disabled)
+  .p-checkbox-box:hover:hover {
+  border-color: #0dcaf0 !important;
+}
+.InputThemeColorLightBlue .span.badge.bg-primary.badge.badge-light-info {
+  background-color: #0dcaf0 !important;
+  border-color: #0dcaf0;
+}
+.InputThemeColorLightBlue
+  .p-inputswitch.p-inputswitch-checked
+  .p-inputswitch-slider {
+  box-shadow: 0 0 0 0.25rem #0dcaf0 !important;
+  background-color: #0dcaf0 !important;
+}
+.InputThemeColorLightBlue tr:first-child th {
+  background-color: #0dcaf0 !important;
+}
+.iconThemeLightBlue {
+  color: #0dcaf0 !important;
+}
+.themeSideBarColorLight .sidebar-nav {
+  background-color: #f0f0f0 !important;
+}
+.themeColorLight {
+  background-color: #f8f9fa !important;
+  border: #f8f9fa;
+  color: black;
+}
+.themeColorLight:hover {
+  background-color: #f8f9fa !important;
+  opacity: 0.9;
+}
+.themeSideBarColorLight .sidebar.sidebar-fixed {
+  background-color: #f8f9fa !important;
+  color: #000;
+}
+.sidebar.sidebar-fixed.show.themeSideBarColorLight ul.sidebar-nav {
+  color: #000;
+  background-color: #f8f9fa !important;
+}
+.badgeColorLight {
+  color: #000 !important;
+}
+.AddButtonLight {
+  border: #f8f9fa;
+  background-color: #f8f9fa !important;
+  color: #000;
+}
+.AddButtonLight:hover {
+  border: #f8f9fa;
+  background-color: #f8f9fa !important;
+  color: #000;
+  opacity: 0.9;
+}
+.tableThemeLight
+  button.p-paginator-page.p-paginator-element.p-link.p-paginator-page-start.p-highlight {
+  color: #f8f9fa !important;
+}
+.themeSideBarColorLight .sidebar.sidebar-fixed.show {
+  background-color: #f8f9fa !important;
+}
+.themeSideBarColorLight a.nav-link.nav-group-toggle {
+  color: #000 !important;
+}
+.themeSideBarColorLight a.nav-link {
+  color: #000 !important;
+}
+
+.themeSideBarColorLight svg.nav-icon {
+  color: #000 !important;
+}
+.themeSideBarColorLight .nav-title {
+  color: #000 !important;
+}
+/* .themeColorLight a :hover {
+  background-color: #212529 !important;
+  color: #fff !important;
+  opacity: 0.9; 
+}*/
+
+.ButtonColorLight {
+  color: #000 !important;
+}
+.menuTextColorLight a.nav-link.nav-group-toggle {
+  color: #000 !important;
+}
+.menuTextColorLight a.nav-link {
+  color: #000 !important;
+}
+.menuTextColorLight .sidebar-nav .nav-group-toggle:hover {
+  color: #000 !important;
+}
+.menuTextColorLight .nav-icon {
+  color: #000 !important;
+}
+.menuTextColorLight .nav-title {
+  color: #000 !important;
+}
+.menuTextColorLight .nav-group-items li a.nav-link {
+  color: #000 !important;
+}
+.HeaderThemeLight {
+  background-color: #0000000d !important;
+  border: #0000000d !important;
+  color: #000 !important;
+}
+
+.InputThemeColorLight .form-control:focus {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #212529 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #212529 !important;
+}
+.InputThemeColorLight .form-select:focus {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #212529 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #212529 !important;
+}
+.InputThemeColorLight .css-t3ipsp-control:hover {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #212529 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #212529 !important;
+}
+.themeSideBarColorLight .sidebar-nav .nav-group-toggle::after {
+  filter: invert(100%) sepia(100%) saturate(5247%) hue-rotate(130deg)
+    brightness(95%) contrast(566%) !important ;
+}
+.themeSAButtonColorLight {
+  color: #ffffff;
+  background: rgb(0 0 21 / 40%) !important;
+  border: 1px solid rgba(3, 3, 7, 0.4) !important;
+}
+
+.searchBarBoxLight input.p-inputtext.p-component.p-input-sm:hover {
+  border-color: #212529 !important;
+}
+.searchBarBoxLight input.p-inputtext.p-component.p-input-sm:focus {
+  border-color: #212529 !important;
+  box-shadow: 0 0 0 0.2rem #2125298c !important;
+}
+.selectThemeClassLight .form-select.me-md-2:focus {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #212529 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #212529 !important;
+}
+.saveButtonThemeLight {
+  background-color: #212529 !important;
+  color: #fff !important;
+  border: #212529;
+}
+.formHeaderLight {
+  background-color: #212529 !important;
+  color: #fff !important;
+  border: #212529;
+}
+.parentClassLight .form-check-input:checked {
+  background-color: #212529 !important;
+  border-color: #212529 !important;
+}
+.parentClassLight .form-check-input:focus {
+  border-color: #212529 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.25rem #212529 !important;
+}
+.parentClassLight .p-datatable .p-sortable-column:focus {
+  box-shadow: inset 0 0 0 0.15rem #212529;
+  outline: 0 none;
+}
+.parentClassLight .form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #6c757d !important;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem #6c757d4f !important;
+}
+.InputThemeColorLight .form-check-input:focus {
+  border-color: #212529;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem #212529 !important;
+}
+.InputThemeColorLight .form-check-input:checked {
+  background-color: #212529;
+  border-color: #212529;
+}
+.saveButtonTheme1Light span.p-button.p-fileupload-choose.p-component {
+  background-color: #212529;
+  border-color: #212529;
+}
+.tableThemeColorLight .p-checkbox-box.p-highlight {
+  background-color: #212529 !important;
+  border-color: #212529 !important;
+}
+.tableThemeColorLight
+  .p-checkbox:not(.p-checkbox-disabled)
+  .p-checkbox-box:hover:hover {
+  border-color: #212529 !important;
+}
+.InputThemeColorLight .span.badge.bg-primary.badge.badge-light-info {
+  background-color: #0d6efd !important;
+  border-color: #0d6efd;
+}
+.InputThemeColorLight
+  .p-inputswitch.p-inputswitch-checked
+  .p-inputswitch-slider {
+  box-shadow: 0 0 0 0.25rem #212529 !important;
+  background-color: #212529 !important;
+}
+.InputThemeColorLight tr:first-child th {
+  background-color: #212529 !important;
+  color: #fff !important;
+}
+.InputThemeColorLight tr:first-child th svg {
+  color: #fff !important;
+}
+.iconThemeLight {
+  color: #212529 !important;
+}
+.themeColorAliceblue {
+  background-color: #0d6efd !important;
+  border: #0d6efd;
+}
+
+.themeColorAliceblue:hover {
+  background-color: #0d6efd !important;
+  opacity: 0.9;
+}
+
+.themeSideBarColorAliceblue .sidebar.sidebar-fixed {
+  background-color: #0d6efd !important;
+}
+.sidebar.sidebar-fixed.show.themeSideBarColorAliceblue ul.sidebar-nav {
+  background-color: #0d6efd !important;
+}
+.badgeColorAliceblue {
+  color: #0d6efd !important;
+}
+.AddButtonAliceblue {
+  border: #0d6efd;
+  background-color: #0d6efd !important;
+  color: #fff;
+}
+.AddButtonAliceblue:hover {
+  border: #0d6efd;
+  background-color: #0d6efd !important;
+  color: #fff;
+  opacity: 0.9;
+}
+.tableThemeAliceblue
+  button.p-paginator-page.p-paginator-element.p-link.p-paginator-page-start.p-highlight {
+  color: #0d6efd !important;
+}
+.themeSideBarColorAliceblue .sidebar.sidebar-fixed.show {
+  background-color: #0d6efd !important;
+}
+/* .themeColorDark a :hover {
+  background-color: #212529 !important;
+  color: #fff !important;
+  opacity: 0.9; 
+}*/
+.themeColorsAliceblue .form-check-input:checked {
+  background-color: #0d6efd !important;
+  border-color: #0d6efd !important;
+}
+.ButtonColorAliceblue {
+  background-color: #00001533 !important;
+  border: #00001533 !important;
+  color: #000 !important;
+}
+.menuTextColorAliceblue a.nav-link.nav-group-toggle {
+  color: #000 !important;
+}
+.menuTextColorAliceblue a.nav-link {
+  color: #000 !important;
+}
+.menuTextColorAliceblue .sidebar-nav .nav-group-toggle:hover {
+  color: #000 !important;
+}
+.menuTextColorAliceblue .nav-icon {
+  color: #000 !important;
+}
+
+.themeSideBarColorAliceblue .nav-title {
+  color: #000 !important;
+}
+.menuTextColorAliceblue li a.nav-linka.nav-link {
+  color: #000 !important;
+}
+.HeaderThemeAliceblue {
+  background-color: #0d6efd !important;
+  border: #0d6efd !important;
+  color: #000 !important;
+}
+.InputThemeColorAliceblue .form-control:focus {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #0d6efd !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #0d6efd !important;
+}
+.InputThemeColorAliceblue .form-select:focus {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #0d6efd !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #0d6efd !important;
+}
+.InputThemeColorAliceblue .css-t3ipsp-control:hover {
+  color: #212529 !important;
+  background-color: #fff !important;
+  border-color: #0d6efd !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #0d6efd !important;
+}
+.themeSideBarColorAliceblue a.nav-link.nav-group-toggle {
+  color: #000 !important;
+}
+.themeSideBarColorAliceblue a.nav-link {
+  color: #000 !important;
+}
+.themeSideBarColorAliceblue svg.nav-icon {
+  color: #000 !important;
+}
+.themeSAButtonColorAliceblue {
+  color: #ffffff;
+  background: rgb(59 132 241) !important;
+  border: 1px solid rgb(59 132 241) !important;
+}
+.searchBarBoxAliceblue input.p-inputtext.p-component.p-input-sm:hover {
+  border-color: #0d6efd !important;
+}
+.searchBarBoxAliceblue input.p-inputtext.p-component.p-input-sm:focus {
+  box-shadow: 0 0 0 0.2rem #0d6efd !important;
+  border-color: #0d6efd !important;
+}
+.selectThemeClassAliceblue .form-select.me-md-2:focus {
+  color: #0d6efd !important;
+  background-color: #fff !important;
+  border-color: #0d6efd !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.05rem #0d6efd !important;
+}
+.saveButtonThemeAliceblue {
+  background-color: #0d6efd !important;
+  color: #fff !important;
+  border: #0d6efd !important;
+}
+.formHeaderAliceblue {
+  background-color: #0d6efd !important;
+  color: #fff !important;
+  border: #0d6efd !important;
+}
+.parentClassAliceblue .form-check-input:checked {
+  background-color: #0d6efd !important;
+  border-color: #0d6efd !important;
+}
+.parentClassAliceblue .form-check-input:focus {
+  border-color: #0d6efd !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.25rem #0d6efd !important;
+}
+.parentClassAliceblue .p-datatable .p-sortable-column:focus {
+  box-shadow: inset 0 0 0 0.15rem #0d6efd;
+  outline: 0 none;
+}
+.parentClassAliceblue .form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #6c757d !important;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem #6c757d4f !important;
+}
+.InputThemeColorAliceblue .form-check-input:focus {
+  border-color: #0d6efd;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem #0d6efd !important;
+}
+.InputThemeColorAliceblue .form-check-input:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+.saveButtonTheme1Aliceblue span.p-button.p-fileupload-choose.p-component {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+.tableThemeColorAliceblue .p-checkbox-box.p-highlight {
+  background-color: #0d6efd !important;
+  border-color: #0d6efd !important;
+}
+.tableThemeColorAliceblue
+  .p-checkbox:not(.p-checkbox-disabled)
+  .p-checkbox-box:hover:hover {
+  border-color: #0d6efd !important;
+}
+.InputThemeColorAliceblue .span.badge.bg-primary.badge.badge-light-info {
+  background-color: #0d6efd !important;
+  border-color: #0d6efd;
+}
+.InputThemeColorAliceblue
+  .p-inputswitch.p-inputswitch-checked
+  .p-inputswitch-slider {
+  box-shadow: 0 0 0 0.25rem #0d6efd !important;
+  background-color: #0d6efd !important;
+}
+.InputThemeColorAliceblue tr:first-child th {
+  background-color: #0d6efd !important;
+  color: #000 !important;
+}
+.InputThemeColorAliceblue tr:first-child th svg {
+  color: #000 !important;
+}
+.iconThemeAliceblue {
+  color: #0d6efd !important;
+}
+.sideBarIconsAliceblue {
+  filter: invert(0%) sepia(9%) saturate(0%) hue-rotate(170deg) brightness(20%) contrast(100%);
+}
+.p-card .p-card-content{
+  padding: 0rem;
+}

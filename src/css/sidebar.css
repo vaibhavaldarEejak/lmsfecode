@@ -1,0 +1,33 @@
+.rh {
+    height: 46px;
+    padding: 5% 0% 0% 5%;
+    
+    /* align-items: center; */
+}
+
+
+
+/* .sidebar-brand{
+    position: absolute;
+    font-size: 14px;
+} */
+
+/* .nav-title{
+    text-underline-position: below;
+} */
+
+
+
+.super-admin-menu-item{
+    
+    text-decoration-line: underline;
+}
+
+.admin-menu-item{
+    text-decoration-line: underline;  
+}
+
+.student-menu-item{
+    text-decoration-line: underline;
+}
+

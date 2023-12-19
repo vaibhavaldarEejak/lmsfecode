@@ -1,0 +1,36 @@
+.container{
+    padding: 0%;
+}
+
+.container-fluid{
+    padding:0%;
+    
+}
+
+.card-ric{
+    margin: 0 0.5rem;
+}
+
+.org{
+    font-size: 14px !important;
+}
+
+.notif{
+    font-size: 14px !important;
+}
+
+.form-control{
+    font-size: 14px !important;
+}
+
+.form-select{
+    font-size: 12px !important;
+}
+
+.input-group-text{
+    font-size: 12px !important;
+}
+
+.modelWidth{
+    width: 40rem
+}
