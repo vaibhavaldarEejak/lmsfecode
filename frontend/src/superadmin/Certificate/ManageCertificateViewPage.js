@@ -21,32 +21,65 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.j
 
 import "../../css/form.css";
 
+const initialFormState = {
+  certificateId: "",
+  certificateName: "",
+  certificateCode: "",
+  orientation: "",
+  baseLanguage: "",
+  meta: "",
+  description: "",
+  certStructure: "",
+  bgimage: "",
+};
+
 const ManageCertificateViewPage = () => {
   const [certificateDetail, setcertificateDetail] = useState(""),
     [imgData, setImgData] = useState(null),
     [visible, setVisible] = useState(false),
     colorName = localStorage.getItem("ThemeColor"),
     [themes, setThemes] = useState(colorName),
-    [form, setform] = useState({
-      certificateId: "",
-      certificateName: "",
-      certificateCode: "",
-      orientation: "",
-      baseLanguage: "",
-      meta: "",
-      description: "",
-      certStructure: "",
-      bgimage: "",
-    });
-
-  let certificateId = "";
-  useEffect(() => {
-    certificateId = localStorage.getItem("certificateId");
-  }, []);
+    [form,setForm]=useState(initialFormState);
+    // [form, setform] = useState({
+    //   certificateId: "",
+    //   certificateName: "",
+    //   certificateCode: "",
+    //   orientation: "",
+    //   baseLanguage: "",
+    //   meta: "",
+    //   description: "",
+    //   certStructure: "",
+    //   bgimage: "",
+    // });
+      
+    const [certificateId,setCertificateId]=useState('');
+    useEffect(() => {
+      const storedCertificateId = localStorage.getItem("certificateId");
+      if (storedCertificateId) {
+        setCertificateId(storedCertificateId);
+      }
+    }, []);
+  
+    // useEffect(() => {
+      //   certificateId = localStorage.getItem("certificateId");
+      // }, []);
 
   useEffect(() => {
     if (certificateDetail) {
-      setform({
+      // setForm({
+      //   certificateId: certificateDetail.certificateId,
+      //   certificateName: certificateDetail.certificateName,
+      //   certificateCode: certificateDetail.certificateCode,
+      //   orientation: certificateDetail.orientation,
+      //   baseLanguage: certificateDetail.baseLanguage,
+      //   meta: certificateDetail.meta,
+      //   description: certificateDetail.description,
+      //   certStructure: certificateDetail.certStructure,
+      //   bgimage: certificateDetail.bgimage,
+      // });
+      
+      setForm(prevForm => ({
+        ...prevForm,
         certificateId: certificateDetail.certificateId,
         certificateName: certificateDetail.certificateName,
         certificateCode: certificateDetail.certificateCode,
@@ -56,7 +89,7 @@ const ManageCertificateViewPage = () => {
         description: certificateDetail.description,
         certStructure: certificateDetail.certStructure,
         bgimage: certificateDetail.bgimage,
-      });
+      }));
     }
     loadPreview(form?.bgimage);
   }, [certificateDetail]);
@@ -91,16 +124,13 @@ const ManageCertificateViewPage = () => {
   }
 
   function renderPage(page) {
-    const canvas = document.createElement("canvas");
     const viewport = page.getViewport({ scale: 1 });
+    const canvas = document.createElement("canvas");
     canvas.width = viewport.width;
     canvas.height = viewport.height;
     const context = canvas.getContext("2d");
-
-    const renderTask = page.render({
-      canvasContext: context,
-      viewport: viewport,
-    });
+  
+    const renderTask = page.render({ canvasContext: context, viewport: viewport });
     renderTask.promise.then(() => {
       const imgData = canvas.toDataURL("image/png");
       setImgData(imgData);
