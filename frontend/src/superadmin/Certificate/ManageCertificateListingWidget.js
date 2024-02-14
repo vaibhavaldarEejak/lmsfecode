@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import {
   CCard,
   CCardBody,
@@ -76,17 +76,36 @@ const manageCertificateListingWidget = () => {
       organizationIds: null,
     });
 
+  // const onGlobalFilterChange2 = (e) => {
+  //   const value = e.target.value;
+  //   let _filters2 = { ...filters2 };
+  //   _filters2["global"].value = value;
+
+  //   setFilters2(_filters2);
+  //   setGlobalFilterValue2(value);
+  // };
+
   const onGlobalFilterChange2 = (e) => {
     const value = e.target.value;
-    let _filters2 = { ...filters2 };
-    _filters2["global"].value = value;
-
-    setFilters2(_filters2);
+    setFilters2(prevFilters => ({ ...prevFilters, global: { value } }));
     setGlobalFilterValue2(value);
   };
 
+  // useEffect(() => {
+  //   if (token !== "Bearer null") {
+  //     getCertificateListing();
+  //     initFilters();
+
+  //     if (certificateCode) {
+  //       getAssignedOrganizationById(certificateCode);
+  //     } else {
+  //       getOrganizationOptionsList();
+  //     }
+  //   }
+  // }, [certificateCode]);
+
   useEffect(() => {
-    if (token !== "Bearer null") {
+    if (token) {
       getCertificateListing();
       initFilters();
 
@@ -96,13 +115,13 @@ const manageCertificateListingWidget = () => {
         getOrganizationOptionsList();
       }
     }
-  }, [certificateCode]);
+  }, [certificateCode, token]);
 
   const getCertificateListing = async () => {
     try {
       const res = await getApiCall("getCertificateList");
       setResponseData(res);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const getOrganizationOptionsList = async () => {
@@ -121,7 +140,7 @@ const manageCertificateListingWidget = () => {
           isChecked: 0,
         }))
       );
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const getAssignedOrganizationById = async (id) => {
@@ -134,7 +153,6 @@ const manageCertificateListingWidget = () => {
       );
       setOrgOptionList(response.data.data);
     } catch (error) {
-      //console.log(error);
       getOrganizationOptionsList();
     }
   };
@@ -200,16 +218,37 @@ const manageCertificateListingWidget = () => {
     }
   };
 
+  // const Deletecertificate = async (certificateId) => {
+  //   const data = {
+  //     certificateId: certificateId,
+  //   };
+  //   try {
+  //     const res = await generalDeleteApiCall("deleteCertificate", data);
+  //     const filteredData = responseData.filter(
+  //       (item) => item.certificateId !== certificateId
+  //     );
+  //     setResponseData(filteredData);
+  //     toast.current.show({
+  //       severity: "success",
+  //       summary: "Successful",
+  //       detail: "Certificate deleted successfully!",
+  //       life: 3000,
+  //     });
+  //   } catch (error) {
+  //     toast.current.show({
+  //       severity: "error",
+  //       summary: "Error",
+  //       detail: "Error Deleting Role",
+  //       life: 3000,
+  //     });
+  //   }
+  //   setDeleteProductDialog(false);
+  // };
   const Deletecertificate = async (certificateId) => {
-    const data = {
-      certificateId: certificateId,
-    };
     try {
-      const res = await generalDeleteApiCall("deleteCertificate", data);
-      const filteredData = responseData.filter(
-        (item) => item.certificateId !== certificateId
-      );
-      setResponseData(filteredData);
+      await generalDeleteApiCall("deleteCertificate", { certificateId });
+      setResponseData(prevData => prevData.filter(item => item.certificateId !== certificateId));
+
       toast.current.show({
         severity: "success",
         summary: "Successful",
@@ -217,102 +256,210 @@ const manageCertificateListingWidget = () => {
         life: 3000,
       });
     } catch (error) {
+      console.error("Error deleting certificate:", error);
+
       toast.current.show({
         severity: "error",
         summary: "Error",
-        detail: "Error Deleting Role",
+        detail: "Error deleting certificate. Please try again later.",
         life: 3000,
       });
     }
     setDeleteProductDialog(false);
   };
-  const buttonTemplate = (responseData) => (
-    <div style={{ display: "flex" }}>
-      <div
-        title="View Certificate"
-        style={{ cursor: "pointer" }}
-        onClick={() => {
-          localStorage.setItem("certificateId", responseData.certificateId);
-          navigate(`/superadmin/certificatelist/viewcertificate`);
-        }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          fill="currentColor"
-          class={`bi bi-eye-fill iconTheme${themes}`}
-          viewBox="0 0 16 16"
-        >
-          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-        </svg>
-      </div>
 
-      <div
-        title="Edit Certificate"
-        style={{ cursor: "pointer" }}
-        onClick={() => {
-          localStorage.setItem("certificateId", responseData.certificateId);
-          navigate(`/superadmin/certificatelist/addcertificate`);
-        }}
+  // const buttonTemplate = (responseData) => (
+  //   <div style={{ display: "flex" }}>
+  //     <div
+  //       title="View Certificate"
+  //       style={{ cursor: "pointer" }}
+  //       onClick={() => {
+  //         localStorage.setItem("certificateId", responseData.certificateId);
+  //         navigate(`/superadmin/certificatelist/viewcertificate`);
+  //       }}
+  //     >
+  //       <svg
+  //         xmlns="http://www.w3.org/2000/svg"
+  //         width="22"
+  //         height="22"
+  //         fill="currentColor"
+  //         class={`bi bi-eye-fill iconTheme${themes}`}
+  //         viewBox="0 0 16 16"
+  //       >
+  //         <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+  //         <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+  //       </svg>
+  //     </div>
+
+  //     <div
+  //       title="Edit Certificate"
+  //       style={{ cursor: "pointer" }}
+  //       onClick={() => {
+  //         localStorage.setItem("certificateId", responseData.certificateId);
+  //         navigate(`/superadmin/certificatelist/addcertificate`);
+  //       }}
+  //     >
+  //       <svg
+  //         xmlns="http://www.w3.org/2000/svg"
+  //         width="20"
+  //         height="20"
+  //         fill="currentColor"
+  //         style={{ margin: "0 0.5rem" }}
+  //         class={`bi bi-pencil-fill iconTheme${themes}`}
+  //         viewBox="0 0 16 16"
+  //       >
+  //         <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+  //       </svg>
+  //     </div>
+  //     <div
+  //       onClick={(e) => {
+  //         setCertificateCode(responseData.certificateId);
+  //         getAssignedOrganizationById(responseData.certificateId);
+  //         setCertificateIds([responseData.certificateId]);
+  //         setContentPayload2({
+  //           certificateId: responseData.certificateId,
+  //           organizationIds: null,
+  //         });
+  //         setOrgVisible2(!orgvisible2);
+  //       }}
+  //       title="Assign Course"
+  //       style={{ cursor: "pointer" }}
+  //     >
+  //       <svg
+  //         xmlns="http://www.w3.org/2000/svg"
+  //         width="22"
+  //         height="22"
+  //         fill="currentColor"
+  //         class={`bi bi-plus-circle-fill iconTheme${themes}`}
+  //         style={{ margin: "0 0.5rem" }}
+  //         viewBox="0 0 16 16"
+  //       >
+  //         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+  //       </svg>
+  //     </div>
+  //     <div
+  //       title="Delete Certificate"
+  //       onClick={() => confirmDeleteProduct(responseData)}
+  //       style={{ cursor: "pointer" }}
+  //     >
+  //       <svg
+  //         xmlns="http://www.w3.org/2000/svg"
+  //         width="22"
+  //         height="22"
+  //         fill="currentColor"
+  //         class={`bi bi-trash-fill iconTheme${themes}`}
+  //         viewBox="0 0 16 16"
+  //       >
+  //         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+  //       </svg>
+  //     </div>
+  //   </div>
+  // );
+  const ViewCertificateButton = () => (
+    <div
+      title="View Certificate"
+      style={{ cursor: "pointer" }}
+      onClick={() => {
+        localStorage.setItem("certificateId", responseData.certificateId);
+        navigate(`/superadmin/certificatelist/viewcertificate`);
+      }}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        fill="currentColor"
+        className={`bi bi-eye-fill iconTheme${themes}`}
+        viewBox="0 0 16 16"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          fill="currentColor"
-          style={{ margin: "0 0.5rem" }}
-          class={`bi bi-pencil-fill iconTheme${themes}`}
-          viewBox="0 0 16 16"
-        >
-          <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-        </svg>
-      </div>
-      <div
-        onClick={(e) => {
-          setCertificateCode(responseData.certificateId);
-          getAssignedOrganizationById(responseData.certificateId);
-          setCertificateIds([responseData.certificateId]);
-          setContentPayload2({
-            certificateId: responseData.certificateId,
-            organizationIds: null,
-          });
-          setOrgVisible2(!orgvisible2);
-        }}
-        title="Assign Course"
-        style={{ cursor: "pointer" }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          fill="currentColor"
-          class={`bi bi-plus-circle-fill iconTheme${themes}`}
-          style={{ margin: "0 0.5rem" }}
-          viewBox="0 0 16 16"
-        >
-          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-        </svg>
-      </div>
-      <div
-        title="Delete Certificate"
-        onClick={() => confirmDeleteProduct(responseData)}
-        style={{ cursor: "pointer" }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          fill="currentColor"
-          class={`bi bi-trash-fill iconTheme${themes}`}
-          viewBox="0 0 16 16"
-        >
-          <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-        </svg>
-      </div>
+        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+      </svg>
     </div>
   );
+
+  const EditCertificateButton = () => (
+    <div
+      title="Edit Certificate"
+      style={{ cursor: "pointer" }}
+      onClick={() => {
+        localStorage.setItem("certificateId", responseData.certificateId);
+        navigate(`/superadmin/certificatelist/addcertificate`);
+      }}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        fill="currentColor"
+        style={{ margin: "0 0.5rem" }}
+        className={`bi bi-pencil-fill iconTheme${themes}`}
+        viewBox="0 0 16 16"
+      >
+        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+      </svg>
+    </div>
+  );
+
+  const AssignCourseButton = () => (
+    <div
+      onClick={(e) => {
+        setCertificateCode(responseData.certificateId);
+        getAssignedOrganizationById(responseData.certificateId);
+        setCertificateIds([responseData.certificateId]);
+        setContentPayload2({
+          certificateId: responseData.certificateId,
+          organizationIds: null,
+        });
+        setOrgVisible2(!orgvisible2);
+      }}
+      title="Assign Course"
+      style={{ cursor: "pointer" }}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        fill="currentColor"
+        className={`bi bi-plus-circle-fill iconTheme${themes}`}
+        style={{ margin: "0 0.5rem" }}
+        viewBox="0 0 16 16"
+      >
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+      </svg>
+    </div>
+  );
+
+  const DeleteCertificateButton = () => (
+    <div
+      title="Delete Certificate"
+      onClick={() => confirmDeleteProduct(responseData)}
+      style={{ cursor: "pointer" }}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        fill="currentColor"
+        className={`bi bi-trash-fill iconTheme${themes}`}
+        viewBox="0 0 16 16"
+      >
+        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+      </svg>
+    </div>
+  );
+
+  const ButtonTemplate = () => (
+    <div style={{ display: "flex" }}>
+      <ViewCertificateButton />
+      <EditCertificateButton />
+      <AssignCourseButton />
+      <DeleteCertificateButton />
+    </div>
+  );
+  // Usage
+  const buttonTemplate = ButtonTemplate;
+
   const confirmDeleteProduct = (product) => {
     setSelectedProduct(product);
     setDeleteProductDialog(true);
@@ -363,32 +510,47 @@ const manageCertificateListingWidget = () => {
     );
   };
 
+  // const onGlobalFilterChange = (e) => {
+  //   const value = e.target.value;
+  //   let _filters = { ...filters };
+  //   _filters["global"].value = value;
+
+  //   setFilters(_filters);
+  //   setGlobalFilterValue(value);
+  // };
   const onGlobalFilterChange = (e) => {
     const value = e.target.value;
-    let _filters = { ...filters };
-    _filters["global"].value = value;
-
-    setFilters(_filters);
+    setFilters(prevFilters => ({ ...prevFilters, global: { value } }));
     setGlobalFilterValue(value);
   };
+
+  // const initFilters = () => {
+  //   setFilters({
+  //     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  //     certificateName: {
+  //       value: null,
+  //       matchMode: FilterMatchMode.STARTS_WITH,
+  //     },
+  //     certificateCode: {
+  //       value: null,
+  //       matchMode: FilterMatchMode.CONTAINS,
+  //     },
+  //     description: {
+  //       value: null,
+  //       matchMode: FilterMatchMode.CONTAINS,
+  //     },
+  //   });
+  //   setGlobalFilterValue("");
+  // };
   const initFilters = () => {
     setFilters({
-      global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      certificateName: {
-        value: null,
-        matchMode: FilterMatchMode.STARTS_WITH,
-      },
-      certificateCode: {
-        value: null,
-        matchMode: FilterMatchMode.CONTAINS,
-      },
-      description: {
-        value: null,
-        matchMode: FilterMatchMode.CONTAINS,
-      },
+      global: { value: "", matchMode: FilterMatchMode.CONTAINS },
+      certificateName: { value: "", matchMode: FilterMatchMode.STARTS_WITH },
+      certificateCode: { value: "", matchMode: FilterMatchMode.CONTAINS },
+      description: { value: "", matchMode: FilterMatchMode.CONTAINS },
     });
-    setGlobalFilterValue("");
   };
+
   const items = Array.from({ length: 10 }, (v, i) => i);
 
   const bodyTemplate = () => {
@@ -422,18 +584,11 @@ const manageCertificateListingWidget = () => {
       isChecked: isChecked,
     }));
     setOrgOptionList(updatedData);
-    setSelectAll(event.checked);
-    setContentPayload([
-      {
-        certificateIds: certificateId,
-        organizationIds: updatedData,
-      },
-    ]);
-    setContentPayload2([
-      { certificateId: certificateCode, organizationIds: updatedData },
-    ]);
+    setSelectAll(event.target.checked);
+    setContentPayload([{ certificateIds: certificateId, organizationIds: updatedData }]);
+    setContentPayload2([{ certificateId: certificateCode, organizationIds: updatedData }]);
   }
-
+  
   const certificateNameFilterTemplate = (options) => {
     return (
       <CFormInput
