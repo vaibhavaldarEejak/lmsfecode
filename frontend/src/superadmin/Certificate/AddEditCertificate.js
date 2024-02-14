@@ -31,6 +31,20 @@ import generalUpdateApi from "src/server/generalUpdateApi";
 import ContentEditor from "./ContentEditor";
 import "../../css/form.css";
 
+const initialFormState = {
+  certificateName: "",
+  bgImage: "",
+  description: "",
+  baseLanguage: "",
+  certificateCode: "",
+  certStructure: "",
+  orientation: "",
+  meta: "",
+  userRelease: 1,
+  isActive: 1,
+};
+
+
 const addEditCertificate = () => {
   const toast = useRef(null),
     [showModalP, setShowModalP] = useState(false),
@@ -51,124 +65,218 @@ const addEditCertificate = () => {
     [themes, setThemes] = useState(colorName),
     [certificateId, setCertificateId] = useState();
 
+  const [form, setForm] = useState(initialFormState);
 
-  let certificateId1 = "";
+  // let certificateId1 = "";
+  // useEffect(() => {
+  //   certificateId1 = localStorage.getItem("certificateId");
+  //   setCertificateId(certificateId1);
+  // }, []);
+
   useEffect(() => {
-    certificateId1 = localStorage.getItem("certificateId");
-    setCertificateId(certificateId1);
+    const storedCertificateId = localStorage.getItem("certificateId");
+    if (storedCertificateId) {
+      setCertificateId(storedCertificateId);
+    }
   }, []);
 
+  // const onChangePicture = (e) => {
+  //   if (e.target.files[0]) {
+  //     setCertImg(e.target.files[0]);
+  //     if (e.target.files[0].type === "application/pdf") {
+  //       loadPDF(URL.createObjectURL(e.target.files[0]));
+  //     } else {
+  //       setForm({ ...form, bgImage: e.target.files[0] });
+  //       const reader = new FileReader();
+  //       reader.addEventListener("load", () => {
+  //         setImgData(reader.result);
+  //       });
+  //       reader.readAsDataURL(e.target.files[0]);
+  //     }
+  //   } else {
+  //     setImgData(null);
+  //     setCertImg("");
+  //   }
+  // };
+
   const onChangePicture = (e) => {
-    if (e.target.files[0]) {
-      setCertImg(e.target.files[0]);
-      if (e.target.files[0].type === "application/pdf") {
-        loadPDF(URL.createObjectURL(e.target.files[0]));
+    const file = e.target.files[0];
+    if (file) {
+      setCertImg(file);
+      if (file.type === "application/pdf") {
+        loadPDF(URL.createObjectURL(file));
       } else {
-        setForm({ ...form, bgImage: e.target.files[0] });
+        setForm({ ...form, bgImage: file });
         const reader = new FileReader();
         reader.addEventListener("load", () => {
           setImgData(reader.result);
         });
-        reader.readAsDataURL(e.target.files[0]);
+        reader.readAsDataURL(file);
       }
     } else {
       setImgData(null);
       setCertImg("");
     }
   };
+
+  // const getCertificateListing = async () => {
+  //   try {
+  //     const res = await getApiCall("getCertificateList");
+  //     if (!certificateId) {
+  //       if (
+  //         (res.length > 0 && res[0].certificateCode === null) ||
+  //         res.length === 0
+  //       ) {
+  //         setForm({
+  //           ...form,
+  //           certificateCode: 100001,
+  //         });
+  //       } else {
+  //         setForm({
+  //           ...form,
+  //           certificateCode: parseInt(res[0].certificateCode) + 1,
+  //         });
+  //       }
+  //     }
+  //     setroleDetail(res);
+  //   } catch (err) {}
+  // };
+
   const getCertificateListing = async () => {
     try {
       const res = await getApiCall("getCertificateList");
       if (!certificateId) {
-        if (
-          (res.length > 0 && res[0].certificateCode === null) ||
-          res.length === 0
-        ) {
-          setForm({
-            ...form,
-            certificateCode: 100001,
-          });
-        } else {
-          setForm({
-            ...form,
-            certificateCode: parseInt(res[0].certificateCode) + 1,
-          });
-        }
+        const newCertificateCode = (res.length > 0 && res[0].certificateCode === null) || res.length === 0
+          ? 100001
+          : parseInt(res[0].certificateCode) + 1;
+        setForm({ ...form, certificateCode: newCertificateCode });
       }
       setroleDetail(res);
-    } catch (err) {}
+    } catch (err) {
+      console.error("Error fetching certificate list:", err);
+    }
   };
 
   useEffect(() => {
-    if (token !== "Bearer null") {
+    if (token) {
       getCertificateListing();
     }
   }, []);
 
+  // function loadPreview(url) {
+  //   if (url) {
+  //     const extension = url.substring(url.lastIndexOf(".")).substring(1);
+  //     if (extension === "pdf") {
+  //       loadPDF(url);
+  //     }
+  //     return url;
+  //   }
+  // }
+
   function loadPreview(url) {
-    if (url) {
-      const extension = url.substring(url.lastIndexOf(".")).substring(1);
-      if (extension === "pdf") {
-        loadPDF(url);
-      }
-      return url;
+    if (url && url.endsWith(".pdf")) {
+      loadPDF(url);
     }
   }
 
-  function renderPage(page) {
-    const canvas = document.createElement("canvas");
+  // function renderPage(page) {
+  //   const canvas = document.createElement("canvas");
+  //   const viewport = page.getViewport({ scale: 2 });
+  //   canvas.width = viewport.width;
+  //   canvas.height = viewport.height;
+  //   const context = canvas.getContext("2d");
+  //   const renderTask = page.render({
+  //     canvasContext: context,
+  //     viewport: viewport,
+  //   });
+
+  //   renderTask.promise.then(async () => {
+  //     const imgData = canvas.toDataURL("image/png");
+  //     setImgData(imgData);
+  //     const response = await fetch(imgData);
+  //     const blob = await response.blob();
+  //     setForm({ ...form, bgImage: blob });
+  //   });
+  // }
+
+  async function renderPage(page) {
     const viewport = page.getViewport({ scale: 2 });
+    const canvas = document.createElement("canvas");
     canvas.width = viewport.width;
     canvas.height = viewport.height;
     const context = canvas.getContext("2d");
-    const renderTask = page.render({
+
+    await page.render({
       canvasContext: context,
       viewport: viewport,
-    });
+    }).promise;
 
-    renderTask.promise.then(async () => {
-      const imgData = canvas.toDataURL("image/png");
-      setImgData(imgData);
-      const response = await fetch(imgData);
-      const blob = await response.blob();
-      setForm({ ...form, bgImage: blob });
-    });
+    const imgData = canvas.toDataURL("image/png");
+    const response = await fetch(imgData);
+    const blob = await response.blob();
+
+    setImgData(imgData);
+    setForm({ ...form, bgImage: blob });
   }
 
-  function loadPDF(url) {
-    pdfjsLib.getDocument(url).promise.then((pdf) => {
-      pdf.getPage(1).then((page) => {
-        renderPage(page);
-      });
-    });
+  // function loadPDF(url) {
+  //   pdfjsLib.getDocument(url).promise.then((pdf) => {
+  //     pdf.getPage(1).then((page) => {
+  //       renderPage(page);
+  //     });
+  //   });
+  // }
+
+  async function loadPDF(url) {
+    try {
+      const pdf = await pdfjsLib.getDocument(url).promise;
+      const page = await pdf.getPage(1);
+      renderPage(page);
+    } catch (error) {
+      console.error('Error loading PDF:', error);
+    }
   }
 
   const updateParentState = (childState) => {
     setEditorState(childState);
   };
 
+  // useEffect(() => {
+  //   if (editorState) {
+  //     setForm({ ...form, certStructure: editorState });
+  //     setValidationMessages({
+  //       ...validationMessages,
+  //       certStructure: editorState ? "" : "Certificate structure is required",
+  //     });
+  //   }
+  // }, [editorState]);
+
+  // const [form, setForm] = useState({
+  //   certificateName: "",
+  //   bgImage: "",
+  //   description: "",
+  //   baseLanguage: "",
+  //   certificateCode: "",
+  //   certStructure: "",
+  //   orientation: "",
+  //   meta: "",
+  //   userRelease: 1,
+  //   isActive: 1,
+  // });
+
   useEffect(() => {
     if (editorState) {
-      setForm({ ...form, certStructure: editorState });
-      setValidationMessages({
-        ...validationMessages,
-        certStructure: editorState ? "" : "Certificate structure is required",
-      });
+      setForm(prevForm => ({
+        ...prevForm,
+        certStructure: editorState
+      }));
+
+      setValidationMessages(prevMessages => ({
+        ...prevMessages,
+        certStructure: editorState ? "" : "Certificate structure is required"
+      }));
     }
   }, [editorState]);
-
-  const [form, setForm] = useState({
-    certificateName: "",
-    bgImage: "",
-    description: "",
-    baseLanguage: "",
-    certificateCode: "",
-    certStructure: "",
-    orientation: "",
-    meta: "",
-    userRelease: 1,
-    isActive: 1,
-  });
 
   useEffect(() => {
     getDynamicFields();
@@ -178,7 +286,7 @@ const addEditCertificate = () => {
     try {
       const res = await getApiCall("getDynamicFieldList");
       setDynamicField(res);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   useEffect(() => {
@@ -204,47 +312,85 @@ const addEditCertificate = () => {
       setTimeout(() => {
         navigate("/superadmin/certificatelist");
       }, 1500);
-    } catch (err) {}
+    } catch (err) { }
   };
+
+  // const validateForm = () => {
+  //   const messages = {};
+  //   let isValid = true;
+
+  //   if (!form.certificateName) {
+  //     messages.certificateName = "Certificate Name is required";
+  //     isValid = false;
+  //   } else {
+  //     messages.certificateName = "";
+  //   }
+
+  //   if (!form.certificateCode) {
+  //     messages.certificateCode = "Certificate Code is required";
+  //     isValid = false;
+  //   }
+
+  //   if (!form.orientation) {
+  //     messages.orientation = "Orientation is required";
+  //     isValid = false;
+  //   }
+
+  //   if (!form.description) {
+  //     messages.description = "Description is required";
+  //     isValid = false;
+  //   }
+
+  //   if (!form.meta) {
+  //     messages.meta = "Meta is required";
+  //     isValid = false;
+  //   }
+
+  //   if (!certificateId)
+  //     if (!form.bgImage || certImg === "") {
+  //       messages.bgImage = "Image is required";
+  //       isValid = false;
+  //     }
+
+  //   if (!form.certStructure || form.certStructure.trim() === "") {
+  //     messages.certStructure = "Certificate Structure is required";
+  //     isValid = false;
+  //   }
+
+  //   setValidationMessages(messages);
+  //   setShowValidationMessages(!isValid);
+
+  //   return isValid;
+  // };
+
   const validateForm = () => {
     const messages = {};
     let isValid = true;
 
-    if (!form.certificateName) {
-      messages.certificateName = "Certificate Name is required";
-      isValid = false;
-    } else {
-      messages.certificateName = "";
-    }
+    const requiredFields = [
+      { field: 'certificateName', message: 'Certificate Name is required' },
+      { field: 'certificateCode', message: 'Certificate Code is required' },
+      { field: 'orientation', message: 'Orientation is required' },
+      { field: 'description', message: 'Description is required' },
+      { field: 'meta', message: 'Meta is required' }
+    ];
 
-    if (!form.certificateCode) {
-      messages.certificateCode = "Certificate Code is required";
-      isValid = false;
-    }
-
-    if (!form.orientation) {
-      messages.orientation = "Orientation is required";
-      isValid = false;
-    }
-
-    if (!form.description) {
-      messages.description = "Description is required";
-      isValid = false;
-    }
-
-    if (!form.meta) {
-      messages.meta = "Meta is required";
-      isValid = false;
-    }
-
-    if (!certificateId)
-      if (!form.bgImage || certImg === "") {
-        messages.bgImage = "Image is required";
+    requiredFields.forEach(({ field, message }) => {
+      if (!form[field]) {
+        messages[field] = message;
         isValid = false;
+      } else {
+        messages[field] = '';
       }
+    });
 
-    if (!form.certStructure || form.certStructure.trim() === "") {
-      messages.certStructure = "Certificate Structure is required";
+    if (!certificateId && (!form.bgImage || certImg === '')) {
+      messages.bgImage = 'Image is required';
+      isValid = false;
+    }
+
+    if (!form.certStructure || form.certStructure.trim() === '') {
+      messages.certStructure = 'Certificate Structure is required';
       isValid = false;
     }
 
@@ -255,43 +401,59 @@ const addEditCertificate = () => {
   };
 
   const handleSave = () => {
-    
     if (validateForm()) {
-      if (certificateId) {
-        updatecertificateApi(form);
-      } else {
-        addCertificate(form);
-      }
+      certificateId ? updatecertificateApi(form) : addCertificate(form);
     }
   };
 
+  // useMemo(() => {
+  //   if (certificateDetail) {
+  //     setForm({
+  //       certificateName: certificateDetail.certificateName,
+  //       orientation: certificateDetail.orientation,
+  //       description: certificateDetail.description,
+  //       meta: certificateDetail.meta,
+  //       baseLanguage: certificateDetail.baseLanguage,
+  //       isActive: certificateDetail.isActive,
+  //       certStructure: certificateDetail.certStructure,
+  //       certificateCode: certificateDetail.certificateCode,
+  //     });
+  //     loadPreview(form.bgImage);
+  //     setCertStructure(certificateDetail?.certStructure);
+  //   }
+  // }, [certificateDetail]);
+
   useMemo(() => {
     if (certificateDetail) {
+      const {
+        certificateName, orientation, description, meta, baseLanguage, isActive, certStructure, certificateCode, bgImage
+      } = certificateDetail;
+
       setForm({
-        certificateName: certificateDetail.certificateName,
-        orientation: certificateDetail.orientation,
-        description: certificateDetail.description,
-        meta: certificateDetail.meta,
-        baseLanguage: certificateDetail.baseLanguage,
-        isActive: certificateDetail.isActive,
-        certStructure: certificateDetail.certStructure,
-        certificateCode: certificateDetail.certificateCode,
+        certificateName, orientation, description, meta, baseLanguage, isActive, certStructure, certificateCode,
+        bgImage
       });
-      loadPreview(form.bgImage);
-      setCertStructure(certificateDetail?.certStructure);
+      setCertStructure(certStructure);
     }
   }, [certificateDetail]);
+
+  useEffect(() => {
+    if (form.bgImage) {
+      loadPreview(form.bgImage);
+    }
+  }, [form.bgImage]);
 
   const certificateApi = async (id) => {
     try {
       const res = await getApiCall("getCertificateById", id);
       setCertificatedetail(res);
       setImgData(res.bgimage);
-    } catch (err) {}
+    } catch (err) { }
   };
   const handleClose = () => {
     setShowModalP(false);
   };
+
   const updatecertificateApi = async (form) => {
     let formData = new FormData();
 
