@@ -47,9 +47,9 @@ import { Divider } from "primereact/divider";
 const API_URL = process.env.REACT_APP_API_URL;
 
 const manageCourseLibraryListingWidget = () => {
+  const token = "Bearer " + localStorage.getItem("ApiToken");
   const colorName = localStorage.getItem("ThemeColor");
   const [themes, setThemes] = useState(colorName);
-  const token = "Bearer " + localStorage.getItem("ApiToken");
 
   const toast = useRef(null);
   const [selectAll, setSelectAll] = useState(false);
@@ -62,23 +62,66 @@ const manageCourseLibraryListingWidget = () => {
   const [globalFilterValue2, setGlobalFilterValue2] = useState("");
   const [selectedContent, setSelectedContent] = useState([]);
   const [selectedOrgs, setSelectedOrgs] = useState([]);
-  const [statuses] = useState(["Draft", "Published", "Unpublished"]);
-  const [trainingTypes] = useState(["eLearning", "Classroom", "Assessments"]);
   const [orgOptionList, setOrgOptionList] = useState([]);
   const [deleteProductDialog, setDeleteProductDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [courses, setCourses] = useState([]);
+  const [contentPayload, setContentPayload] = useState([{ trainingIds: null, organizationIds: null }]);
+  const [checkStatus, setCheckStatus] = useState(false);
+  const [responseData, setResponseData] = useState([]);
+  const [rowClick, setRowClick] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [orgvisible, setOrgVisible] = useState(false);
+  const [orgvisible2, setOrgVisible2] = useState(false);
+  const [assignCourseStatus, setAssignCourseStatus] = useState(false);
+
   const navigate = useNavigate();
   const courseType = window.location.href.split("?")[1] || "";
-  const [courses, setCourses] = useState([]);
-
-  const [contentPayload, setContentPayload] = useState([
-    {
-      trainingIds: null,
-      organizationIds: null,
-    },
-  ]);
-  const [checkStatus, setCheckStatus] = useState(false);
   const optionalPara = window.location.href.split("?")[1];
+
+  const [statuses] = useState(["Draft", "Published", "Unpublished"]);
+  const [trainingTypes] = useState(["eLearning", "Classroom", "Assessments"]);
+
+  // useEffect(() => {
+  //   if (token !== "Bearer null") {
+  //     getCertificateListing();
+  //     getCategoryList();
+  //     initFilters();
+  //     initFilters2();
+
+  //     if (trainingCode) {
+  //       getAssignedOrganizationById(trainingCode);
+  //     } else {
+  //       getOrganizationOptionsList();
+  //     }
+  //   }
+
+  //   if (optionalPara === "eLearning") {
+  //     const filteredData = courses.filter(
+  //       (items) => items.trainingTypeId === 1
+  //     );
+  //     setResponseData(filteredData);
+  //   } else if (optionalPara === "Classroom") {
+  //     const filteredData = courses.filter(
+  //       (items) => items.trainingTypeId === 2
+  //     );
+  //     setResponseData(filteredData);
+  //   } else if (optionalPara === "Assessments") {
+  //     const filteredData = courses.filter(
+  //       (items) => items.trainingTypeId === 3
+  //     );
+  //     setResponseData(filteredData);
+  //   } else if (optionalPara === "All" || optionalPara === "") {
+  //     const filteredData = courses;
+  //     setResponseData(filteredData);
+  //   } else if (optionalPara === "Archived") {
+  //     const filteredData = courses.filter(
+  //       (items) => items.status === "Archived"
+  //     );
+  //     setResponseData(filteredData);
+  //   }
+  // }, [trainingCode, optionalPara]);
 
   useEffect(() => {
     if (token !== "Bearer null") {
@@ -94,67 +137,21 @@ const manageCourseLibraryListingWidget = () => {
       }
     }
 
+    let filteredData = [];
     if (optionalPara === "eLearning") {
-      const filteredData = courses.filter(
-        (items) => items.trainingTypeId === 1
-      );
-      setResponseData(filteredData);
+      filteredData = courses.filter((items) => items.trainingTypeId === 1);
     } else if (optionalPara === "Classroom") {
-      const filteredData = courses.filter(
-        (items) => items.trainingTypeId === 2
-      );
-      setResponseData(filteredData);
+      filteredData = courses.filter((items) => items.trainingTypeId === 2);
     } else if (optionalPara === "Assessments") {
-      const filteredData = courses.filter(
-        (items) => items.trainingTypeId === 3
-      );
-      setResponseData(filteredData);
-    } else if (optionalPara === "All" || optionalPara === "") {
-      const filteredData = courses;
-      setResponseData(filteredData);
+      filteredData = courses.filter((items) => items.trainingTypeId === 3);
     } else if (optionalPara === "Archived") {
-      const filteredData = courses.filter(
-        (items) => items.status === "Archived"
-      );
-      setResponseData(filteredData);
+      filteredData = courses.filter((items) => items.status === "Archived");
+    } else {
+      filteredData = courses;
     }
+    setResponseData(filteredData);
   }, [trainingCode, optionalPara]);
 
-
-
-  // useEffect(() => {
-  //   if (token !== "Bearer null") {
-  //     getCertificateListing();
-  //     getCategoryList();
-  //     initFilters();
-  //     initFilters2();
-  
-  //     if (trainingCode) {
-  //       getAssignedOrganizationById(trainingCode);
-  //     } else {
-  //       getOrganizationOptionsList();
-  //     }
-  //   }
-  
-  //   let filteredData = [];
-  //   if (optionalPara === "eLearning") {
-  //     filteredData = courses.filter((items) => items.trainingTypeId === 1);
-  //   } else if (optionalPara === "Classroom") {
-  //     filteredData = courses.filter((items) => items.trainingTypeId === 2);
-  //   } else if (optionalPara === "Assessments") {
-  //     filteredData = courses.filter((items) => items.trainingTypeId === 3);
-  //   } else if (optionalPara === "Archived") {
-  //     filteredData = courses.filter((items) => items.status === "Archived");
-  //   } else {
-  //     filteredData = courses;
-  //   }
-  //   setResponseData(filteredData);
-  // }, [trainingCode, optionalPara]);
-  
-
-  const [rowClick, setRowClick] = useState(false);
-
-  const [responseData, setResponseData] = useState([]);
   const getCertificateListing = async () => {
     try {
       const res = await getApiCall("getCourseLibraryList");
@@ -163,69 +160,77 @@ const manageCourseLibraryListingWidget = () => {
       }
       setCourses(res);
       setLoading(true);
-    } catch (err) {}
+    } catch (err) { }
   };
-  const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [orgvisible, setOrgVisible] = useState(false);
-  const [orgvisible2, setOrgVisible2] = useState(false);
-  const [assignCourseStatus, setAssignCourseStatus] = useState(false);
+
   function handleCheckboxChange(rowData, field, event) {
     const isChecked = event.target.checked ? 1 : 0;
     const updatedRow = { ...rowData, [field]: isChecked };
-    const updatedData = orgOptionList.map((row) =>
+    const updatedData = orgOptionList.map(row =>
       row.organizationId === rowData.organizationId ? updatedRow : row
     );
+  
     setOrgOptionList(updatedData);
-
-    setContentPayload([
-      {
-        trainingIds: trainingIds,
-        organizationIds: updatedData,
-      },
-    ]);
+    setContentPayload([{ trainingIds, organizationIds: updatedData }]);
   }
+  
 
-  const statusShow = (responseData) => (
-    <CBadge
-      className={`badge badge-light-info text-info badgeColor${themes} `}
-      color="light"
-    >
-      {responseData?.status}
-    </CBadge>
-  );
+  // const statusShow = (responseData) => (
+  //   <CBadge
+  //     className={`badge badge-light-info text-info badgeColor${themes} `}
+  //     color="light"
+  //   >
+  //     {responseData?.status}
+  //   </CBadge>
+  // );
+  const statusShow = (responseData) => {
+    const badgeColor = `badge badge-light-info text-info badgeColor${themes}`;
+    return (
+      <CBadge className={badgeColor} color="light">
+        {responseData?.status}
+      </CBadge>
+    );
+  };  
+
+  // function handleSelectAll(event) {
+  //   const isChecked = event.target.checked ? 1 : 0;
+  //   const updatedData = orgOptionList.map((row) => ({
+  //     ...row,
+  //     isChecked: isChecked,
+  //   }));
+  //   setOrgOptionList(updatedData);
+  //   setSelectAll(event.checked);
+
+  //   setContentPayload([
+  //     {
+  //       trainingIds: trainingIds,
+  //       organizationIds: updatedData,
+  //     },
+  //   ]);
+  // }
 
   function handleSelectAll(event) {
-    const isChecked = event.target.checked ? 1 : 0;
-    const updatedData = orgOptionList.map((row) => ({
-      ...row,
-      isChecked: isChecked,
-    }));
+    const isChecked = event.target.checked;
+    const updatedData = orgOptionList.map((row) => ({ ...row, isChecked }));
+    
     setOrgOptionList(updatedData);
-    setSelectAll(event.checked);
-
-    setContentPayload([
-      {
-        trainingIds: trainingIds,
-        organizationIds: updatedData,
-      },
-    ]);
+    setSelectAll(isChecked);
+    setContentPayload([{ trainingIds, organizationIds: updatedData }]);
   }
-
+  
   const getOrganizationOptionsList = async () => {
     try {
       const res = await getApiCall("getOrganizationOptionsList");
-      setOrgOptionList(
-        res.map((data) => ({
-          organizationId: data.organizationId,
-          organizationName: data.organizationName,
-          domainName: data.domainName,
-          isChecked: 0,
-        }))
-      );
+      const updatedOrgOptionList = res.map((data) => ({
+        organizationId: data.organizationId,
+        organizationName: data.organizationName,
+        domainName: data.domainName,
+        isChecked: 0,
+      }));
+      setOrgOptionList(updatedOrgOptionList);
     } catch (err) {}
   };
-
+  
   const getAssignedOrganizationById = async (id) => {
     try {
       const res = await getApiCall("getTrainingAssignedToOrganizationList", id);
@@ -233,6 +238,7 @@ const manageCourseLibraryListingWidget = () => {
     } catch (err) {
       getOrganizationOptionsList();
       var errMsg = err?.response?.data?.error;
+
       toast.current.show({
         severity: "error",
         summary: "Error",
@@ -260,7 +266,6 @@ const manageCourseLibraryListingWidget = () => {
     const data = {
       courseLibraryId: courseLibraryId,
     };
-
     try {
       const res = await generalDeleteApiCall("deleteCourseLibrary", data);
       const filteredData = responseData.filter(
@@ -284,203 +289,351 @@ const manageCourseLibraryListingWidget = () => {
     setDeleteProductDialog(false);
   };
 
+  // const editButtons = (responseData) => {
+  //   if (responseData.trainingTypeId === 1) {
+  //     return (
+  //       <div
+  //         title="Edit Course"
+  //         onClick={() => {
+  //           localStorage.setItem(
+  //             "courseLibraryId",
+  //             responseData.courseLibraryId
+  //           );
+  //           navigate(
+  //             `/superadmin/courselibrarylist/editelearningcourselibrary`
+  //           );
+  //         }}
+  //       >
+  //         <svg
+  //           xmlns="http://www.w3.org/2000/svg"
+  //           width="20"
+  //           height="20"
+  //           fill="currentColor"
+  //           style={{ margin: "0 0.5rem", cursor: "pointer" }}
+  //           class={`bi bi-pencil-fill iconTheme${themes}`}
+  //           viewBox="0 0 16 16"
+  //         >
+  //           <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+  //         </svg>
+  //       </div>
+  //     );
+  //   } else if (responseData.trainingTypeId === 2) {
+  //     return (
+  //       <div
+  //         title="Edit Course"
+  //         onClick={() => {
+  //           localStorage.setItem(
+  //             "courseLibraryId",
+  //             responseData.courseLibraryId
+  //           );
+  //           navigate(
+  //             `/superadmin/courselibrarylist/editclassroomcourselibrary`
+  //           );
+  //         }}
+  //       >
+  //         <svg
+  //           xmlns="http://www.w3.org/2000/svg"
+  //           width="20"
+  //           height="20"
+  //           fill="currentColor"
+  //           style={{ margin: "0 0.5rem", cursor: "pointer" }}
+  //           class={`bi bi-pencil-fill iconTheme${themes}`}
+  //           viewBox="0 0 16 16"
+  //         >
+  //           <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+  //         </svg>
+  //       </div>
+  //     );
+  //   } else if (responseData.trainingTypeId === 3) {
+  //     return (
+  //       <div
+  //         title="Edit Course"
+  //         onClick={() => {
+  //           localStorage.setItem(
+  //             "courseLibraryId",
+  //             responseData.courseLibraryId
+  //           );
+  //           navigate(
+  //             `/superadmin/courselibrarylist/editassessmentcourselibrary`
+  //           );
+  //         }}
+  //       >
+  //         <svg
+  //           xmlns="http://www.w3.org/2000/svg"
+  //           width="20"
+  //           height="20"
+  //           fill="currentColor"
+  //           style={{ margin: "0 0.5rem", cursor: "pointer" }}
+  //           class={`bi bi-pencil-fill iconTheme${themes}`}
+  //           viewBox="0 0 16 16"
+  //         >
+  //           <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+  //         </svg>
+  //       </div>
+  //     );
+  //   }
+  // };
+  // const assignButton = (responseData) => {
+  //   return (
+  //     <div
+  //       onClick={() => {
+  //         setAssignCourseStatus(true);
+  //         confirmAssignProduct(responseData);
+  //       }}
+  //       title="Assign Course"
+  //     >
+  //       <svg
+  //         xmlns="http://www.w3.org/2000/svg"
+  //         width="22"
+  //         height="22"
+  //         fill="currentColor"
+  //         class={`bi bi-plus-circle-fill iconTheme${themes}`}
+  //         style={{ margin: "0 0.5rem" }}
+  //         viewBox="0 0 16 16"
+  //       >
+  //         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+  //       </svg>
+  //     </div>
+  //   );
+  // };
+  // const buttonTemplate = (responseData) => (
+  //   <div style={{ display: "flex" }}>
+  //     <div
+  //       title="View Course"
+  //       onClick={() => {
+  //         localStorage.setItem("courseLibraryId", responseData.courseLibraryId);
+  //         navigate(`/superadmin/courselibrarylist/viewcourselibrary`);
+  //       }}
+  //     >
+  //       <svg
+  //         xmlns="http://www.w3.org/2000/svg"
+  //         width="22"
+  //         height="22"
+  //         fill="currentColor"
+  //         class={`bi bi-eye-fill iconTheme${themes}`}
+  //         viewBox="0 0 16 16"
+  //       >
+  //         <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+  //         <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+  //       </svg>
+  //     </div>
+  //     {/* {responseData} */}
+  //     {responseData.status === "Published" ? (
+  //       <div
+  //         title="Edit Course"
+  //         onClick={() => confirmEditProduct(responseData)}
+  //       >
+  //         <svg
+  //           xmlns="http://www.w3.org/2000/svg"
+  //           width="20"
+  //           height="20"
+  //           fill="currentColor"
+  //           style={{ margin: "0 0.5rem", cursor: "pointer" }}
+  //           class={`bi bi-pencil-fill iconTheme${themes}`}
+  //           viewBox="0 0 16 16"
+  //         >
+  //           <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+  //         </svg>
+  //       </div>
+  //     ) : (
+  //       editButtons(responseData)
+  //     )}
+  //     {responseData.status === "Published" ? (
+  //       <div
+  //         onClick={(e) => {
+  //           setTrainingCode(responseData.courseLibraryId);
+  //           getAssignedOrganizationById(responseData.courseLibraryId);
+  //           setTrainingIds([responseData.courseLibraryId]);
+  //           setContentPayload([
+  //             {
+  //               trainingIds: trainingIds,
+  //               organizationIds: null,
+  //             },
+  //           ]);
+  //           setOrgVisible2(!orgvisible2);
+  //         }}
+  //         title="Assign Course"
+  //       >
+  //         <svg
+  //           xmlns="http://www.w3.org/2000/svg"
+  //           width="22"
+  //           height="22"
+  //           fill="currentColor"
+  //           class={`bi bi-plus-circle-fill iconTheme${themes}`}
+  //           style={{ margin: "0 0.5rem" }}
+  //           viewBox="0 0 16 16"
+  //         >
+  //           <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+  //         </svg>
+  //       </div>
+  //     ) : (
+  //       assignButton(responseData)
+  //     )}
+  //     <div
+  //       title="Delete Course"
+  //       onClick={() => confirmDeleteProduct(responseData)}
+  //     >
+  //       <svg
+  //         xmlns="http://www.w3.org/2000/svg"
+  //         width="22"
+  //         height="22"
+  //         fill="currentColor"
+  //         class={`bi bi-trash-fill iconTheme${themes}`}
+  //         viewBox="0 0 16 16"
+  //       >
+  //         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+  //       </svg>
+  //     </div>
+  //   </div>
+  // );
+  const EditButton = ({ title, onClick }) => (
+    <div title={title} onClick={onClick}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        fill="currentColor"
+        style={{ margin: "0 0.5rem", cursor: "pointer" }}
+        className={`bi bi-pencil-fill iconTheme${themes}`}
+        viewBox="0 0 16 16"
+      >
+        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+      </svg>
+    </div>
+  );
+  
+  const AssignButton = ({ title, onClick }) => (
+    <div onClick={onClick} title={title}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        fill="currentColor"
+        className={`bi bi-plus-circle-fill iconTheme${themes}`}
+        style={{ margin: "0 0.5rem" }}
+        viewBox="0 0 16 16"
+      >
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+      </svg>
+    </div>
+  );
+  
+  const ViewButton = ({ title, onClick }) => (
+    <div title={title} onClick={onClick}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        fill="currentColor"
+        className={`bi bi-eye-fill iconTheme${themes}`}
+        viewBox="0 0 16 16"
+      >
+        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+      </svg>
+    </div>
+  );
+  
+  const DeleteButton = ({ title, onClick }) => (
+    <div title={title} onClick={onClick}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        fill="currentColor"
+        className={`bi bi-trash-fill iconTheme${themes}`}
+        viewBox="0 0 16 16"
+      >
+        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+      </svg>
+    </div>
+  );
+  
   const editButtons = (responseData) => {
-    if (responseData.trainingTypeId === 1) {
-      return (
-        <div
-          title="Edit Course"
-          onClick={() => {
-            localStorage.setItem(
-              "courseLibraryId",
-              responseData.courseLibraryId
-            );
-            navigate(
-              `/superadmin/courselibrarylist/editelearningcourselibrary`
-            );
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            fill="currentColor"
-            style={{ margin: "0 0.5rem", cursor: "pointer" }}
-            class={`bi bi-pencil-fill iconTheme${themes}`}
-            viewBox="0 0 16 16"
-          >
-            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-          </svg>
-        </div>
-      );
-    } else if (responseData.trainingTypeId === 2) {
-      return (
-        <div
-          title="Edit Course"
-          onClick={() => {
-            localStorage.setItem(
-              "courseLibraryId",
-              responseData.courseLibraryId
-            );
-            navigate(
-              `/superadmin/courselibrarylist/editclassroomcourselibrary`
-            );
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            fill="currentColor"
-            style={{ margin: "0 0.5rem", cursor: "pointer" }}
-            class={`bi bi-pencil-fill iconTheme${themes}`}
-            viewBox="0 0 16 16"
-          >
-            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-          </svg>
-        </div>
-      );
-    } else if (responseData.trainingTypeId === 3) {
-      return (
-        <div
-          title="Edit Course"
-          onClick={() => {
-            localStorage.setItem(
-              "courseLibraryId",
-              responseData.courseLibraryId
-            );
-            navigate(
-              `/superadmin/courselibrarylist/editassessmentcourselibrary`
-            );
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            fill="currentColor"
-            style={{ margin: "0 0.5rem", cursor: "pointer" }}
-            class={`bi bi-pencil-fill iconTheme${themes}`}
-            viewBox="0 0 16 16"
-          >
-            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-          </svg>
-        </div>
-      );
+    switch (responseData.trainingTypeId) {
+      case 1:
+        return (
+          <EditButton
+            title="Edit Course"
+            onClick={() => {
+              localStorage.setItem("courseLibraryId", responseData.courseLibraryId);
+              navigate(`/superadmin/courselibrarylist/editelearningcourselibrary`);
+            }}
+          />
+        );
+      case 2:
+        return (
+          <EditButton
+            title="Edit Course"
+            onClick={() => {
+              localStorage.setItem("courseLibraryId", responseData.courseLibraryId);
+              navigate(`/superadmin/courselibrarylist/editclassroomcourselibrary`);
+            }}
+          />
+        );
+      case 3:
+        return (
+          <EditButton
+            title="Edit Course"
+            onClick={() => {
+              localStorage.setItem("courseLibraryId", responseData.courseLibraryId);
+              navigate(`/superadmin/courselibrarylist/editassessmentcourselibrary`);
+            }}
+          />
+        );
+      default:
+        return null;
     }
   };
-  const assignButton = (responseData) => {
-    return (
-      <div
-        onClick={() => {
-          setAssignCourseStatus(true);
-          confirmAssignProduct(responseData);
-        }}
-        title="Assign Course"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          fill="currentColor"
-          class={`bi bi-plus-circle-fill iconTheme${themes}`}
-          style={{ margin: "0 0.5rem" }}
-          viewBox="0 0 16 16"
-        >
-          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-        </svg>
-      </div>
-    );
-  };
+  
+  const assignButton = (responseData) => (
+    <AssignButton
+      title="Assign Course"
+      onClick={() => {
+        setAssignCourseStatus(true);
+        confirmAssignProduct(responseData);
+      }}
+    />
+  );
+  
   const buttonTemplate = (responseData) => (
     <div style={{ display: "flex" }}>
-      <div
+      <ViewButton
         title="View Course"
         onClick={() => {
           localStorage.setItem("courseLibraryId", responseData.courseLibraryId);
           navigate(`/superadmin/courselibrarylist/viewcourselibrary`);
         }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          fill="currentColor"
-          class={`bi bi-eye-fill iconTheme${themes}`}
-          viewBox="0 0 16 16"
-        >
-          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-        </svg>
-      </div>
-      {/* {responseData} */}
+      />
       {responseData.status === "Published" ? (
-        <div
+        <EditButton
           title="Edit Course"
           onClick={() => confirmEditProduct(responseData)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            fill="currentColor"
-            style={{ margin: "0 0.5rem", cursor: "pointer" }}
-            class={`bi bi-pencil-fill iconTheme${themes}`}
-            viewBox="0 0 16 16"
-          >
-            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-          </svg>
-        </div>
+        />
       ) : (
         editButtons(responseData)
       )}
       {responseData.status === "Published" ? (
-        <div
-          onClick={(e) => {
+        <AssignButton
+          title="Assign Course"
+          onClick={() => {
             setTrainingCode(responseData.courseLibraryId);
             getAssignedOrganizationById(responseData.courseLibraryId);
             setTrainingIds([responseData.courseLibraryId]);
-            setContentPayload([
-              {
-                trainingIds: trainingIds,
-                organizationIds: null,
-              },
-            ]);
+            setContentPayload([{ trainingIds: trainingIds, organizationIds: null }]);
             setOrgVisible2(!orgvisible2);
           }}
-          title="Assign Course"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="22"
-            height="22"
-            fill="currentColor"
-            class={`bi bi-plus-circle-fill iconTheme${themes}`}
-            style={{ margin: "0 0.5rem" }}
-            viewBox="0 0 16 16"
-          >
-            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-          </svg>
-        </div>
+        />
       ) : (
         assignButton(responseData)
       )}
-      <div
+      <DeleteButton
         title="Delete Course"
         onClick={() => confirmDeleteProduct(responseData)}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          fill="currentColor"
-          class={`bi bi-trash-fill iconTheme${themes}`}
-          viewBox="0 0 16 16"
-        >
-          <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-        </svg>
-      </div>
+      />
     </div>
   );
+  
   const confirmDeleteProduct = (product) => {
     setSelectedProduct(product);
     setDeleteProductDialog(true);
@@ -638,24 +791,48 @@ const manageCourseLibraryListingWidget = () => {
     );
   };
 
+  // const onGlobalFilterChange = (e) => {
+  //   const value = e.target.value;
+  //   let _filters = { ...filters };
+  //   _filters["global"].value = value;
+
+  //   setFilters(_filters);
+  //   setGlobalFilterValue(value);
+  // };
+
   const onGlobalFilterChange = (e) => {
     const value = e.target.value;
-    let _filters = { ...filters };
-    _filters["global"].value = value;
-
-    setFilters(_filters);
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      global: {
+        ...prevFilters.global,
+        value: value
+      }
+    }));
     setGlobalFilterValue(value);
   };
+  
+  // const onGlobalFilterChange2 = (e) => {
+  //   const value = e.target.value;
+  //   let _filters2 = { ...filters2 };
+  //   _filters2["global"].value = value;
+
+  //   setFilters2(_filters2);
+  //   setGlobalFilterValue2(value);
+  // };
 
   const onGlobalFilterChange2 = (e) => {
     const value = e.target.value;
-    let _filters2 = { ...filters2 };
-    _filters2["global"].value = value;
-
-    setFilters2(_filters2);
+    setFilters2(prevFilters => ({
+      ...prevFilters,
+      global: {
+        ...prevFilters.global,
+        value: value
+      }
+    }));
     setGlobalFilterValue2(value);
   };
-
+  
   const trainingTypeRowFilterTemplate = (options) => {
     return (
       <Dropdown
@@ -795,33 +972,49 @@ const manageCourseLibraryListingWidget = () => {
     setGlobalFilterValue2("");
   };
 
+  // const initFilters = () => {
+  //   setFilters({
+  //     global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  //     courseTitle: {
+  //       value: null,
+  //       matchMode: FilterMatchMode.CONTAINS,
+  //     },
+  //     trainingCode: {
+  //       value: null,
+  //       matchMode: FilterMatchMode.STARTS_WITH,
+  //     },
+  //     dateModified: {
+  //       value: null,
+  //       matchMode: FilterMatchMode.STARTS_WITH,
+  //     },
+  //     courseLibraryName: { value: null, matchMode: FilterMatchMode.IN },
+  //     trainingType: {
+  //       value: null,
+  //       matchMode: FilterMatchMode.STARTS_WITH,
+  //     },
+  //     categoryName: { value: null, matchMode: "contains" },
+  //     trainingCode: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  //     status: { value: null, matchMode: FilterMatchMode.EQUALS },
+  //     Action: { value: null, matchMode: FilterMatchMode.EQUALS },
+  //   });
+  //   setGlobalFilterValue("");
+  // };
+
   const initFilters = () => {
     setFilters({
       global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-      courseTitle: {
-        value: null,
-        matchMode: FilterMatchMode.CONTAINS,
-      },
-      trainingCode: {
-        value: null,
-        matchMode: FilterMatchMode.STARTS_WITH,
-      },
-      dateModified: {
-        value: null,
-        matchMode: FilterMatchMode.STARTS_WITH,
-      },
-      courseLibraryName: { value: null, matchMode: FilterMatchMode.IN },
-      trainingType: {
-        value: null,
-        matchMode: FilterMatchMode.STARTS_WITH,
-      },
-      categoryName: { value: null, matchMode: "contains" },
+      courseTitle: { value: null, matchMode: FilterMatchMode.CONTAINS },
       trainingCode: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+      dateModified: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+      courseLibraryName: { value: null, matchMode: FilterMatchMode.IN },
+      trainingType: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+      categoryName: { value: null, matchMode: FilterMatchMode.CONTAINS },
       status: { value: null, matchMode: FilterMatchMode.EQUALS },
-      Action: { value: null, matchMode: FilterMatchMode.EQUALS },
+      Action: { value: null, matchMode: FilterMatchMode.EQUALS }
     });
     setGlobalFilterValue("");
   };
+  
   const items = Array.from({ length: 10 }, (v, i) => i);
 
   const bodyTemplate = () => {
@@ -1059,7 +1252,7 @@ const manageCourseLibraryListingWidget = () => {
                   className={`btn btn-primary saveButtonTheme${themes}`}
                   onClick={() => addContentToOrg2()}
                   type="button"
-                  // disabled={checkUser}
+                // disabled={checkUser}
                 >
                   Assign course
                 </CButton>
