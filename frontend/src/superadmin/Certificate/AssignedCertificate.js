@@ -63,31 +63,48 @@ const SearchableDropdown = () => {
       },
     ]);
 
-  useEffect(() => {
-    if (organizationId) {
-      getOrgById(organizationId);
+  // useEffect(() => {
+  //   if (organizationId) {
+  //     getOrgById(organizationId);
 
-      if (certificateList) {
-        setCertificateData({
-          organizationId: certificateList.map((item) => {
-            return {
-              certificateId: item.certificateId,
-              certificateName: item.certificateName,
-              organizationId: organizationId,
-              roleId: roleId,
-              isActive: item.isActive,
-            };
-          }),
-        });
+  //     if (certificateList) {
+  //       setCertificateData({
+  //         organizationId: certificateList.map((item) => {
+  //           return {
+  //             certificateId: item.certificateId,
+  //             certificateName: item.certificateName,
+  //             organizationId: organizationId,
+  //             roleId: roleId,
+  //             isActive: item.isActive,
+  //           };
+  //         }),
+  //       });
+  //     }
+  //   }
+  // }, [organizationId, loading4]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (organizationId && certificateList) {
+        const newData = certificateList.map(item => ({
+          certificateId: item.certificateId,
+          certificateName: item.certificateName,
+          organizationId: organizationId,
+          roleId: roleId,
+          isActive: item.isActive,
+        }));
+        setCertificateData({ organizationId: newData });
       }
-    }
-  }, [organizationId, loading4]);
+    };
+  
+    fetchData();
+  }, [organizationId, certificateList, roleId]);  
 
   const getOrgById = async (value) => {
     setDropDownList(true);
     try {
-      const res = await getApiCall("getCertificateListByOrgId", value);
       setLoading4(true);
+      const res = await getApiCall("getCertificateListByOrgId", value);
       setCertificateList(res);
     } catch (err) {}
   };
@@ -152,49 +169,62 @@ const SearchableDropdown = () => {
     } catch (err) {}
   };
 
-  useEffect(() => {
-    if (certificateListApi === false) {
-      if (token !== "Bearer null") {
-        getAllCertificateList();
-      }
+  // useEffect(() => {
+  //   if (certificateListApi === false) {
+  //     if (token !== "Bearer null") {
+  //       getAllCertificateList();
+  //     }
+  //   }
+  //   initFilters();
+  // }, [loading]);
+
+  useEffect(()=>{
+    if(!certificateListApi && token !== "Bearer null"){
+      getAllCertificateList();
     }
     initFilters();
-  }, [loading]);
+  },[certificateListApi, token])
+
   useEffect(() => {
-    if (organisationApi === false) {
-      if (token !== "Bearer null") {
-        getOrganizationsList();
-      }
+    if (!organisationApi && token !== "Bearer null") {
+      getOrganizationsList();
     }
-  }, [loading2]);
+  }, [organisationApi, token]);
 
   const inputs1 = (certificateList) => (
     <>{certificateList.certificateName || certificateList.certificateName}</>
   );
 
+  // const onGlobalFilterChange = (e) => {
+  //   const value = e.target.value;
+  //   let _filters = { ...filters };
+  //   _filters["global"].value = value;
+
+  //   setFilters(_filters);
+  //   setGlobalFilterValue(value);
+  // };
+
   const onGlobalFilterChange = (e) => {
     const value = e.target.value;
-    let _filters = { ...filters };
-    _filters["global"].value = value;
-
-    setFilters(_filters);
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      global: {
+        ...prevFilters.global,
+        value: value
+      }
+    }));
     setGlobalFilterValue(value);
   };
+  
   const initFilters = () => {
     setFilters({
       global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      certificateName: {
-        value: null,
-        matchMode: FilterMatchMode.STARTS_WITH,
-      },
-      notificationEventName: {
-        value: null,
-        matchMode: FilterMatchMode.STARTS_WITH,
-      },
+      certificateName: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+      notificationEventName: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
       isActive: { value: null, matchMode: FilterMatchMode.EQUALS },
     });
-    setGlobalFilterValue("");
   };
+  
   const items = Array.from({ length: 10 }, (v, i) => i);
 
   const bodyTemplate = () => {
@@ -235,58 +265,88 @@ const SearchableDropdown = () => {
     );
   };
 
+  // const handleChange = (e, certificateId) => {
+  //   console.log(certificateList);
+
+  //   setButtonEnable(true);
+
+  //   certificateList.map((index) => {
+  //     if (index.certificateId === certificateId) {
+  //       index.isChecked = !index.isChecked;
+
+  //       setBulkCertificateUpdateByOrgId((oldArray) => [
+  //         ...oldArray,
+  //         {
+  //           certificateId: index.certificateId,
+  //           isChecked: index.isChecked === true ? 1 : 0,
+  //         },
+  //       ]);
+  //     }
+  //   });
+
+  //   e.target.checked = !e.target.checked;
+  //   const { value, checked } = e.target;
+  //   const { certificateIds } = agreement;
+
+  //   if (checked) {
+  //     setAgreement({ certificateIds: [...certificateIds, value] });
+  //     setButtonEnable(true);
+  //   } else {
+  //     setAgreement({
+  //       certificateIds: certificateIds.filter((e) => e !== value),
+  //     });
+  //   }
+  // };
+
   const handleChange = (e, certificateId) => {
-    console.log(certificateList);
-
-    setButtonEnable(true);
-
-    certificateList.map((index) => {
-      if (index.certificateId === certificateId) {
-        index.isChecked = !index.isChecked;
-
-        setBulkCertificateUpdateByOrgId((oldArray) => [
-          ...oldArray,
-          {
-            certificateId: index.certificateId,
-            isChecked: index.isChecked === true ? 1 : 0,
-          },
-        ]);
+    // Update isChecked in certificateList
+    const updatedCertificateList = certificateList.map(certificate => {
+      if (certificate.certificateId === certificateId) {
+        return {
+          ...certificate,
+          isChecked: !certificate.isChecked,
+        };
       }
+      return certificate;
     });
-
-    e.target.checked = !e.target.checked;
+  
+    // Update bulkCertificateUpdateByOrgId
+    const updatedBulkCertificate = updatedCertificateList
+      .filter(certificate => certificate.isChecked)
+      .map(certificate => ({
+        certificateId: certificate.certificateId,
+        isChecked: certificate.isChecked ? 1 : 0,
+      }));
+  
+    // Update agreement
     const { value, checked } = e.target;
-    const { certificateIds } = agreement;
-
-    if (checked) {
-      setAgreement({ certificateIds: [...certificateIds, value] });
-      setButtonEnable(true);
-    } else {
-      setAgreement({
-        certificateIds: certificateIds.filter((e) => e !== value),
-      });
-    }
+    setAgreement(prevAgreement => ({
+      certificateIds: checked
+        ? [...prevAgreement.certificateIds, value]
+        : prevAgreement.certificateIds.filter(id => id !== value),
+    }));
+  
+    // Update state
+    setButtonEnable(true);
+    setBulkCertificateUpdateByOrgId(updatedBulkCertificate);
   };
+  
 
   const certificatecode = (responseData) => (
     <>{responseData.certificateCode ? responseData.certificateCode : "-"}</>
   );
 
-  const checkbox1 =
-    certificateList &&
-    ((e) => (
-      <>
-        <input
-          class="form-check-input"
-          type="checkbox"
-          checked={e.isChecked}
-          value={e.certificateId}
-          onChange={(event) => handleChange(event, e.certificateId)}
-          style={{ marginTop: "11px" }}
-        />
-      </>
-    ));
-
+  const checkbox1 = (certificate) => (
+    <input
+      className="form-check-input"
+      type="checkbox"
+      checked={certificate.isChecked}
+      value={certificate.certificateId}
+      onChange={(event) => handleChange(event, certificate.certificateId)}
+      style={{ marginTop: "11px" }}
+    />
+  );
+  
   return (
     <div className="">
       <div className="container">
